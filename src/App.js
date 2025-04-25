@@ -66,23 +66,25 @@ function App() {
 
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "380px", margin: "0 auto" }}>
-      <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
-      <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
-        <div style={{ position: "relative", flexGrow: 1 }}>
-          <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
-          <input
-            ref={inputRef}
-            type="text"
-            value={query}
-            onChange={handleInputChange}
-            placeholder="제품명을 검색하세요"
-            style={{ width: "90%", padding: "12px 12px 12px 38px", border: "none", borderRadius: "12px", backgroundColor: "#f5f5f5" }}
-          />
-          <ul style={{ listStyle: "none", paddingLeft: 0, maxHeight: "160px", overflowY: "auto", border: suggestions.length > 0 ? "1px solid #ccc" : "none", margin: 0, background: "white", position: "absolute", top: "46px", zIndex: 2, borderRadius: "4px" }}>
-            {suggestions.map((item, index) => (
-              <li key={index} onClick={() => handleSuggestionClick(item)} style={{ cursor: "pointer", padding: "8px" }}>{item["제품명"]}</li>
-            ))}
-          </ul>
+      <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
+        <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <div style={{ position: "relative", flexGrow: 1 }}>
+            <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
+            <input
+              ref={inputRef}
+              type="text"
+              value={query}
+              onChange={handleInputChange}
+              placeholder="제품명을 검색하세요"
+              style={{ width: "90%", padding: "12px 12px 12px 38px", border: "none", borderRadius: "12px", backgroundColor: "#f5f5f5" }}
+            />
+            <ul style={{ listStyle: "none", paddingLeft: 0, maxHeight: "160px", overflowY: "auto", border: suggestions.length > 0 ? "1px solid #ccc" : "none", margin: 0, background: "white", position: "absolute", top: "46px", zIndex: 2, borderRadius: "4px" }}>
+              {suggestions.map((item, index) => (
+                <li key={index} onClick={() => handleSuggestionClick(item)} style={{ cursor: "pointer", padding: "8px" }}>{item["제품명"]}</li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
 
@@ -118,26 +120,26 @@ function App() {
           )}
 
           <div style={{ overflowX: "auto" }}>
-            <table style={{ minWidth: "800px", borderCollapse: "collapse", fontSize: "14px", tableLayout: "auto", width: "100%", border: "1px solid #ddd" }}>
+            <table style={{ minWidth: "800px", borderCollapse: "separate", borderSpacing: "0 4px", fontSize: "14px", width: "100%", border: "1px solid #ddd" }}>
               <thead>
                 <tr>
                   {["제품명", "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                    <th key={i} style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", whiteSpace: "nowrap" }}>{label}</th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", whiteSpace: "nowrap" }}>{label}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제품명"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["성분"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}%</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제품명"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["성분"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}%</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
                   </tr>
                 ))}
               </tbody>
