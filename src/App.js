@@ -136,7 +136,7 @@ function App() {
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}%</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
