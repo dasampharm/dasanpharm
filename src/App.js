@@ -77,11 +77,19 @@ function App() {
               value={query}
               onChange={handleInputChange}
               placeholder="제품명을 검색하세요"
-              style={{ width: "90%", padding: "12px 12px 12px 38px", border: "none", borderRadius: "12px", backgroundColor: "#f5f5f5" }}
+              style={{
+                width: "100%",
+                padding: "16px 16px 16px 42px",
+                fontSize: "16px",
+                border: "1px solid #ccc",
+                borderRadius: "14px",
+                backgroundColor: "#f5f5f5",
+                boxSizing: "border-box"
+              }}
             />
-            <ul style={{ listStyle: "none", paddingLeft: 0, maxHeight: "160px", overflowY: "auto", border: suggestions.length > 0 ? "1px solid #ccc" : "none", margin: 0, background: "white", position: "absolute", top: "46px", zIndex: 2, borderRadius: "4px" }}>
+            <ul style={{ listStyle: "none", paddingLeft: 0, maxHeight: "160px", overflowY: "auto", border: suggestions.length > 0 ? "1px solid #ccc" : "none", margin: 0, background: "white", position: "absolute", top: "56px", zIndex: 2, borderRadius: "4px", width: "100%" }}>
               {suggestions.map((item, index) => (
-                <li key={index} onClick={() => handleSuggestionClick(item)} style={{ cursor: "pointer", padding: "8px" }}>{item["제품명"]}</li>
+                <li key={index} onClick={() => handleSuggestionClick(item)} style={{ cursor: "pointer", padding: "10px 12px" }}>{item["제품명"]}</li>
               ))}
             </ul>
           </div>
@@ -100,7 +108,7 @@ function App() {
           <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
           <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
             <p>다산팝에서 거래하는 약물 리스트입니다.</p>
-            <p>제품명 검색 시 동일 성변의 약물이 보여집니다.</p>
+            <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
             <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
           </div>
         </>
