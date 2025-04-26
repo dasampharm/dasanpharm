@@ -138,8 +138,8 @@ function App() {
               </div>
             )}
 
-            <div style={{ maxHeight: "350px", overflowY: "auto", position: "relative" }}>
-              <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%" }}>
+            <div style={{ maxHeight: "250px", overflowY: "auto", position: "relative" }}>
+              <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
                 <thead>
                   <tr>
                     <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>제품명</th>
