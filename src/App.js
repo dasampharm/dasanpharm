@@ -134,7 +134,7 @@ function App() {
             </label>
           )}
 
-          <div style={{ maxHeight: "700px", overflowY: "auto", position: "relative" }}>
+          <div style={{ maxHeight: "450px", overflowY: "auto", position: "relative" }}>
             <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
               <thead>
                 <tr>
