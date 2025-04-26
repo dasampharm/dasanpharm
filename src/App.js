@@ -127,8 +127,8 @@ function App() {
             </label>
           )}
 
-          <div style={{ overflowX: "auto" }}>
-            <table style={{ minWidth: "800px", borderCollapse: "separate", borderSpacing: "0 4px", fontSize: "14px", width: "100%", border: "1px solid #ddd" }}>
+          <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "300px", border: "1px solid #ddd" }}>
+            <table style={{ minWidth: "800px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%" }}>
               <thead>
                 <tr>
                   <th style={{
