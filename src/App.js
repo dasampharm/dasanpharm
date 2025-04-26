@@ -122,7 +122,7 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "20px", width: "100%", overflowX: "auto" }}>
+        <div style={{ marginTop: "20px", width: "100%", overflowX: "auto", overscrollBehavior: "contain" }}>
           {selectedDrug && (
             <div style={{ marginBottom: "8px" }}>
               <div style={{ fontSize: "16px" }}>성분: {selectedDrug["성분"]} {selectedDrug["용량"]}</div>
@@ -140,7 +140,7 @@ function App() {
             </label>
           )}
 
-          <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
+          <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative", overscrollBehavior: "contain" }}>
             <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
               <thead>
                 <tr>
