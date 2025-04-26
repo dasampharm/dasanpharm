@@ -107,7 +107,7 @@ function App() {
 
           <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
           <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
-            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
+            <p>다산팝에서 거래하는 약물 리스트입니다.</p>
             <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
             <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
           </div>
@@ -127,7 +127,7 @@ function App() {
             </label>
           )}
 
-          <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "300px", border: "1px solid #ddd" }}>
+          <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "400px", border: "1px solid #ddd" }}>
             <table style={{ minWidth: "800px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%" }}>
               <thead>
                 <tr>
@@ -168,7 +168,8 @@ function App() {
                       border: "1px solid #eee",
                       whiteSpace: "normal",
                       overflowWrap: "break-word",
-                      wordBreak: "keep-all"
+                      wordBreak: "break-word",
+                      maxWidth: "9ch"
                     }}>{drug["제품명"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["성분"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
