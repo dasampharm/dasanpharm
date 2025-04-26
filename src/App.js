@@ -151,8 +151,35 @@ function App() {
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>{drug["성분"]}</td>
+                                        <td style={{
+  padding: "10px",
+  border: "1px solid #eee",
+  minWidth: "140px",
+  whiteSpace: "normal",
+  wordBreak: "break-word",
+  overflowWrap: "break-word",
+  position: "sticky",
+  left: 0,
+  background: "#fff",
+  zIndex: 1,
+  wordBreak: "break-word",
+  overflowWrap: "break-word",
+  maxWidth: "6em"   // 추가
+}}>
+  {drug["제품명"]}
+</td>
+
+                                        <td style={{
+  padding: "10px",
+  border: "1px solid #eee",
+  minWidth: "140px",
+  whiteSpace: "normal",
+  wordBreak: "break-word",
+  overflowWrap: "break-word",
+  maxWidth: "9em"   // 추가
+}}>
+  {drug["성분"]}
+</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "120px", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
