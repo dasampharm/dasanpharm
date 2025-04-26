@@ -1,4 +1,4 @@
-// 약물 검색 React App
+// 약물 검색 React App (최종 수정)
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
@@ -7,12 +7,12 @@ import data from "./약물데이터.json";
 const categories = ["소화기계", "호흡기계", "항생제", "순환기계", "당뇨병용제", "정신신경계"];
 
 function App() {
-  const [query, setQuery] = useState(""); // 검색창 입력값
-  const [suggestions, setSuggestions] = useState([]); // 검색 자동완성 리스트
-  const [selectedDrug, setSelectedDrug] = useState(null); // 선택한 약물
-  const [sameDoseOnly, setSameDoseOnly] = useState(false); // 동일 용량 필터 여부
-  const [selectedCategory, setSelectedCategory] = useState(null); // 선택한 카테고리
-  const inputRef = useRef(null); // 검색창 포커스용
+  const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [selectedDrug, setSelectedDrug] = useState(null);
+  const [sameDoseOnly, setSameDoseOnly] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const inputRef = useRef(null);
 
   // 검색창 입력 핸들링
   const handleInputChange = (e) => {
@@ -116,7 +116,7 @@ function App() {
 
           <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
           <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
-            <p>다산팝에서 거래하는 약물 리스트입니다.</p>
+            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
             <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
             <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
           </div>
@@ -132,41 +132,27 @@ function App() {
           </div>
 
           {selectedDrug && (
-            <label>
-              <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량만 보기
-            </label>
+            <div style={{ marginTop: "8px", marginBottom: "20px" }}>
+              <label>
+                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량만 보기
+              </label>
+            </div>
           )}
 
-          {/* 테이블 상단(항목명) */}
-          <table style={{ width: "100%", minWidth: "800px", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                <th style={{
-                  position: "sticky", top: 0, left: 0, zIndex: 4,
-                  background: "#f7f7f7", padding: "12px", border: "1px solid #ccc",
-                  maxWidth: "10em", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all"
-                }}>제품명</th>
-                {["성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                  <th key={i} style={{
-                    position: "sticky", top: 0, background: "#f7f7f7", zIndex: 2,
-                    padding: "12px", border: "1px solid #ccc", textAlign: "left", whiteSpace: "nowrap"
-                  }}>{label}</th>
-                ))}
-              </tr>
-            </thead>
-          </table>
-
-          {/* 테이블 본문(데이터) 스크롤 적용 */}
-          <div style={{ maxHeight: "300px", overflowY: "auto" }}>
-            <table style={{ width: "100%", minWidth: "800px", borderCollapse: "collapse" }}>
+          <div style={{ maxHeight: "300px", overflowY: "auto", position: "relative" }}>
+            <table style={{ width: "100%", minWidth: "800px", borderCollapse: "collapse", tableLayout: "fixed" }}>
+              <thead>
+                <tr>
+                  <th style={{ position: "sticky", top: 0, left: 0, zIndex: 4, backgroundColor: "#f7f7f7", padding: "12px", border: "1px solid #ccc", textAlign: "left", maxWidth: "10em", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all" }}>제품명</th>
+                  {["성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
+                    <th key={i} style={{ position: "sticky", top: 0, backgroundColor: "#f7f7f7", zIndex: 2, padding: "12px", border: "1px solid #ccc", textAlign: "left", whiteSpace: "nowrap" }}>{label}</th>
+                  ))}
+                </tr>
+              </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{
-                      position: "sticky", left: 0, zIndex: 1,
-                      background: "#fff", padding: "12px", border: "1px solid #eee",
-                      maxWidth: "10em", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all"
-                    }}>{drug["제품명"]}</td>
+                    <td style={{ position: "sticky", left: 0, backgroundColor: "#fff", zIndex: 1, padding: "12px", border: "1px solid #eee", maxWidth: "10em", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all" }}>{drug["제품명"]}</td>
                     <td style={{ padding: "12px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["성분"]}</td>
                     <td style={{ padding: "12px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "12px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
