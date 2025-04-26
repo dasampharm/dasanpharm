@@ -107,7 +107,7 @@ function App() {
 
           <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
           <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
-            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
+            <p>다산팝에서 거래하는 약물 리스트입니다.</p>
             <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
             <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
           </div>
@@ -127,7 +127,7 @@ function App() {
             </label>
           )}
 
-          <div style={{ overflowX: "auto" }}>
+          <div style={{ overflowX: "auto", maxHeight: "250px", overflowY: "auto" }}>
             <table style={{ minWidth: "800px", borderCollapse: "separate", borderSpacing: "0 4px", fontSize: "14px", width: "100%", border: "1px solid #ddd" }}>
               <thead>
                 <tr>
@@ -136,39 +136,44 @@ function App() {
                     border: "1px solid #ccc",
                     backgroundColor: "#f7f7f7",
                     textAlign: "left",
-                    whiteSpace: "normal",
                     position: "sticky",
+                    top: 0,
                     left: 0,
-                    background: "#f7f7f7",
-                    zIndex: 2,
-                    maxWidth: "80px",
-                    wordBreak: "break-word"
+                    zIndex: 3,
+                    maxWidth: "6.5em",
+                    whiteSpace: "normal",
+                    overflowWrap: "break-word",
+                    wordBreak: "keep-all"
                   }}>제품명</th>
                   {["성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", whiteSpace: "nowrap" }}>{label}</th>
+                    <th key={i} style={{
+                      padding: "14px",
+                      border: "1px solid #ccc",
+                      backgroundColor: "#f7f7f7",
+                      textAlign: "left",
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 2,
+                      whiteSpace: "nowrap"
+                    }}>{label}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                  
-                                        <td style={{
-  padding: "14px",
-  border: "1px solid #eee",
-  maxWidth: "6.5em",                  // 글자 수 기반 너비 → 약 6~7자
-  whiteSpace: "normal",              // 줄바꿈 허용
-  overflowWrap: "break-word",        // 단어 안에서도 줄바꿈 허용
-  wordBreak: "keep-all",             // 한글 기준으로는 '단어 단위'로 줄바꿈
-  position: "sticky",
-  left: 0,
-  background: "#fff",
-  zIndex: 1
-}}>
-  {drug["제품명"]}
-</td>
-
-
+                    <td style={{
+                      padding: "14px",
+                      border: "1px solid #eee",
+                      maxWidth: "6.5em",
+                      whiteSpace: "normal",
+                      overflowWrap: "break-word",
+                      wordBreak: "keep-all",
+                      position: "sticky",
+                      left: 0,
+                      background: "#fff",
+                      zIndex: 1
+                    }}>{drug["제품명"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["성분"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
