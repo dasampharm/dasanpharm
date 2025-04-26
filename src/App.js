@@ -141,7 +141,7 @@ function App() {
                     left: 0,
                     background: "#f7f7f7",
                     zIndex: 2,
-                    maxWidth: "80px",
+                    maxWidth: "6.5ch",
                     wordBreak: "break-word"
                   }}>제품명</th>
                   {["성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
