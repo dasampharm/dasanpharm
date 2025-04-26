@@ -25,7 +25,7 @@ function App() {
 
     const lower = value.toLowerCase();
     const filtered = data.filter((item) =>
-      item["제품명"]?.toLowerCase().includes(lower)
+      item["제품명"]?.toLowerCase().startsWith(lower)
     );
     setSuggestions(filtered);
   };
@@ -149,7 +149,7 @@ function App() {
                     {[
                       "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"
                     ].map((label, i) => (
-                      <th key={i} style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: "80px", whiteSpace: "nowrap" }}>{label}</th>
+                      <th key={i} style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: label === "용량" ? "80px" : "80px", whiteSpace: label === "용량" ? "normal" : "nowrap", wordBreak: label === "용량" ? "break-word" : "normal" }}>{label}</th>
                     ))}
                   </tr>
                 </thead>
@@ -160,7 +160,7 @@ function App() {
                       {!selectedDrug && (
                         <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>{drug["성분"]}</td>
                       )}
-                      <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
+                      <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>{drug["용량"]}</td>
                       <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>{drug["제약사"]}</td>
                       <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
                       <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
@@ -176,7 +176,7 @@ function App() {
         )}
       </div>
 
-      <footer style={{ flexShrink: 0, fontSize: "13px", color: "#888", textAlign: "center" }}>
+      <footer style={{ flexShrink: 0, marginTop: "10px", fontSize: "13px", color: "#888", textAlign: "center" }}>
         HSY © 2025 | netizenlily@naver.com
       </footer>
     </div>
