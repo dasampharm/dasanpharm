@@ -117,7 +117,7 @@ function App() {
             </div>
           )}
 
-          <div style={{ maxHeight: "500px", overflowY: "auto", position: "relative" }}>
+          <div style={{ maxHeight: "700px", overflowY: "auto", position: "relative" }}>
             <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
               <thead>
                 <tr>
@@ -154,9 +154,9 @@ function App() {
         </div>
       )}
 
-      <footer style={{ marginTop: "10px", fontSize: "13px", color: "#888", textAlign: "center" }}>
+      <div style={{ marginTop: "30px", fontSize: "13px", color: "#888", textAlign: "center" }}>
         HSY © 2025 | netizenlily@naver.com
-      </footer>
+      </div>
     </div>
   );
 }
