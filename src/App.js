@@ -130,10 +130,10 @@ function App() {
           )}
 
           <div style={{ overflowY: "auto", maxHeight: "400px", border: "1px solid #ddd" }}>
-            <table style={{ minWidth: "800px", borderCollapse: "collapse", fontSize: "14px", width: "100%" }}>
+            <table style={{ minWidth: "800px", borderCollapse: "collapse", fontSize: "14px", width: "100%", tableLayout: "fixed" }}>
               <thead>
                 <tr>
-                  <th style={{ position: "sticky", top: 0, left: 0, backgroundColor: "#f7f7f7", zIndex: 4, padding: "14px", border: "1px solid #ccc", textAlign: "left", whiteSpace: "normal", maxWidth: "6em", overflowWrap: "break-word", wordBreak: "break-word" }}>제품명</th>
+                  <th style={{ position: "sticky", top: 0, left: 0, backgroundColor: "#f7f7f7", zIndex: 4, padding: "14px", border: "1px solid #ccc", textAlign: "left", whiteSpace: "nowrap", maxWidth: "6em" }}>제품명</th>
                   {["성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
                     <th key={i} style={{ position: "sticky", top: 0, backgroundColor: "#f7f7f7", zIndex: 3, padding: "14px", border: "1px solid #ccc", textAlign: "left", whiteSpace: "nowrap" }}>{label}</th>
                   ))}
