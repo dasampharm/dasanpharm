@@ -116,9 +116,14 @@ function App() {
 
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "40px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-            <h2>{selectedDrug ? "동일 성분 제품" : `📂 ${selectedCategory} 카테고리`}</h2>
-            <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
+          <div style={{ marginBottom: "10px" }}>
+            {selectedDrug && (
+              <div style={{ marginBottom: "10px", fontSize: "16px" }}>성분: {selectedDrug["성분"]}</div>
+            )}
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <h2>{selectedDrug ? "동일 성분 제품" : `📂 ${selectedCategory} 카테고리`}</h2>
+              <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
+            </div>
           </div>
 
           {selectedDrug && (
@@ -134,7 +139,9 @@ function App() {
               <thead>
                 <tr>
                   <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>제품명</th>
-                  <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>성분</th>
+                  {!selectedDrug && (
+                    <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>성분</th>
+                  )}
                   {[
                     "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"
                   ].map((label, i) => (
@@ -146,9 +153,11 @@ function App() {
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
                     <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "140px", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>{drug["성분"]}</td>
+                    {!selectedDrug && (
+                      <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>{drug["성분"]}</td>
+                    )}
                     <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "140px" }}>{drug["제약사"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word" }}>{drug["제약사"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
