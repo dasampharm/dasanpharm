@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
 
-const categories = ["소화기계", "호흑기계", "항생제", "순환기계", "당모병용제", "정신신경계"];
+const categories = ["소화기계", "호흡기계", "항생제", "순환기계", "당뇨병용제", "정신신경계"];
 
 function App() {
   const [query, setQuery] = useState("");
@@ -96,9 +96,27 @@ function App() {
         </div>
       </div>
 
+      {!selectedDrug && !selectedCategory && (
+        <>
+          <h3 style={{ fontSize: "16px", marginTop: "30px", marginBottom: "10px" }}>약물 카테고리</h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "30px" }}>
+            {categories.map((cat) => (
+              <button key={cat} onClick={() => handleCategoryClick(cat)} style={{ padding: "10px 16px", border: "1px solid #ccc", borderRadius: "12px", background: "white", fontSize: "14px", cursor: "pointer" }}>{cat}</button>
+            ))}
+          </div>
+
+          <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
+          <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
+            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
+            <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
+            <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
+          </div>
+        </>
+      )}
+
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "40px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
             <h2>{selectedDrug ? "동일 성분 제품" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
@@ -115,9 +133,9 @@ function App() {
             <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "120px", whiteSpace: "normal", wordBreak: "break-word" }}>제품명</th>
+                  <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>제품명</th>
                   {[
-                    { label: "성분", width: "120px" },
+                    { label: "성분", width: "140px" },
                     { label: "용량", width: "80px" },
                     { label: "제약사", width: "120px" },
                     { label: "약가", width: "80px" },
@@ -133,8 +151,8 @@ function App() {
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "120px", whiteSpace: "normal", wordBreak: "break-word", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "120px", whiteSpace: "normal", wordBreak: "break-word" }}>{drug["성분"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>{drug["성분"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "120px", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
                     <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
