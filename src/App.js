@@ -99,24 +99,6 @@ function App() {
       </div>
 
       <div style={{ flexGrow: 1, overflowY: "auto", marginTop: "20px" }}>
-        {!selectedDrug && !selectedCategory && (
-          <>
-            <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>약물 카테고리</h3>
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "30px" }}>
-              {categories.map((cat) => (
-                <button key={cat} onClick={() => handleCategoryClick(cat)} style={{ padding: "10px 16px", border: "1px solid #ccc", borderRadius: "12px", background: "white", fontSize: "14px", cursor: "pointer" }}>{cat}</button>
-              ))}
-            </div>
-
-            <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
-            <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
-              <p>다산팜에서 거래하는 약물 리스트입니다.</p>
-              <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
-              <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
-            </div>
-          </>
-        )}
-
         {(selectedDrug || selectedCategory) && (
           <div>
             {selectedDrug && (
@@ -138,7 +120,7 @@ function App() {
               </div>
             )}
 
-            <div style={{ maxHeight: "250px", overflowY: "auto", position: "relative" }}>
+            <div style={{ maxHeight: "500px", overflowY: "auto", position: "relative" }}>
               <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
                 <thead>
                   <tr>
