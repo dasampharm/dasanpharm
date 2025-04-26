@@ -65,7 +65,7 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "380px", margin: "0 auto" }}>
+    <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "600px", margin: "0 auto" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
         <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
         <div style={{ display: "flex", gap: "8px" }}>
@@ -133,33 +133,27 @@ function App() {
             <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word", maxWidth: "4.5em" }}>제품명</th>
+                  <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "120px", whiteSpace: "normal", wordBreak: "break-word" }}>제품명</th>
+                  <th style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word" }}>성분</th>
                   {[
-                    { label: "성분", width: "140px" },
-                    { label: "용량", width: "80px" },
-                    { label: "제약사", width: "120px" },
-                    { label: "약가", width: "80px" },
-                    { label: "요율", width: "80px" },
-                    { label: "환산액", width: "80px" },
-                    { label: "품절", width: "80px" },
-                    { label: "비고", width: "120px" }
-                  ].map(({ label, width }, i) => (
-                    <th key={i} style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: width, whiteSpace: "nowrap" }}>{label}</th>
+                    "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"
+                  ].map((label, i) => (
+                    <th key={i} style={{ padding: "10px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: "80px", whiteSpace: "nowrap" }}>{label}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "4.5em", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "140px", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "6em", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", textOverflow: "ellipsis" }}>{drug["성분"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "120px", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "80px", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
-                    <td style={{ padding: "10px", border: "1px solid #eee", minWidth: "120px", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "6em", overflow: "hidden", textOverflow: "ellipsis", display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>{drug["성분"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "6em" }}>{drug["용량"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word", overflowWrap: "break-word", maxWidth: "6em" }}>{drug["제약사"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
+                    <td style={{ padding: "10px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
                   </tr>
                 ))}
               </tbody>
