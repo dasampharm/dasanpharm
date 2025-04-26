@@ -176,7 +176,7 @@ function App() {
         )}
       </div>
 
-      <footer style={{ flexShrink: 0, marginTop: "20px", fontSize: "13px", color: "#888", textAlign: "center" }}>
+      <footer style={{ flexShrink: 0, fontSize: "13px", color: "#888", textAlign: "center" }}>
         HSY © 2025 | netizenlily@naver.com
       </footer>
     </div>
