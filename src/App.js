@@ -141,7 +141,7 @@ function App() {
                     left: 0,
                     background: "#f7f7f7",
                     zIndex: 2,
-                    maxWidth: "6.5ch",
+                    maxWidth: "80px",
                     wordBreak: "break-word"
                   }}>제품명</th>
                   {["성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
@@ -152,17 +152,23 @@ function App() {
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{
-                      padding: "14px",
-                      border: "1px solid #eee",
-                      whiteSpace: "normal",
-                      wordBreak: "break-word",
-                      maxWidth: "80px",
-                      position: "sticky",
-                      left: 0,
-                      background: "#fff",
-                      zIndex: 1
-                    }}>{drug["제품명"]}</td>
+                  
+                                        <td style={{
+  padding: "14px",
+  border: "1px solid #eee",
+  maxWidth: "6.5em",                  // 글자 수 기반 너비 → 약 6~7자
+  whiteSpace: "normal",              // 줄바꿈 허용
+  overflowWrap: "break-word",        // 단어 안에서도 줄바꿈 허용
+  wordBreak: "keep-all",             // 한글 기준으로는 '단어 단위'로 줄바꿈
+  position: "sticky",
+  left: 0,
+  background: "#fff",
+  zIndex: 1
+}}>
+  {drug["제품명"]}
+</td>
+
+
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["성분"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
