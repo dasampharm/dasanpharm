@@ -143,7 +143,7 @@ function App() {
                     border: "1px solid #ccc",
                     textAlign: "left",
                     whiteSpace: "normal",
-                    maxWidth: "6ch",
+                    maxWidth: "6.5em",
                     overflowWrap: "break-word",
                     wordBreak: "break-word"
                   }}>제품명</th>
@@ -174,9 +174,9 @@ function App() {
                       whiteSpace: "normal",
                       overflowWrap: "break-word",
                       wordBreak: "break-word",
-                      maxWidth: "6ch"
+                      maxWidth: "6.5em"
                     }}>{drug["제품명"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "break-word", maxWidth: "9ch" }}>{drug["성분"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "break-word", maxWidth: "9.5em" }}>{drug["성분"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
