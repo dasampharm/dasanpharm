@@ -2,18 +2,19 @@ import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
 
-// 약물 카테고리 리스트
+// 카테고리 리스트
 const categories = ["소화기계", "호흡기계", "항생제", "순환기계", "당뇨병용제", "정신신경계"];
 
 function App() {
   const [query, setQuery] = useState(""); // 검색창 입력값
   const [suggestions, setSuggestions] = useState([]); // 검색 자동완성 리스트
-  const [selectedDrug, setSelectedDrug] = useState(null); // 검색으로 선택한 약
-  const [sameDoseOnly, setSameDoseOnly] = useState(false); // 동일 용량만 보기 체크박스
+  const [selectedDrug, setSelectedDrug] = useState(null); // 선택한 약
+  const [sameDoseOnly, setSameDoseOnly] = useState(false); // 동일 용량 보기 여부
+  const [onlyAvailable, setOnlyAvailable] = useState(false); // 거래 가능만 보기 여부
   const [selectedCategory, setSelectedCategory] = useState(null); // 선택한 카테고리
-  const inputRef = useRef(null); // 검색 input에 접근하기 위한 ref
+  const inputRef = useRef(null); // 검색 input ref
 
-  // 검색창 입력 변화시 작동
+  // 검색창 입력할 때 자동완성 리스트 업데이트
   const handleInputChange = (e) => {
     const value = e.target.value;
     setQuery(value);
@@ -25,7 +26,6 @@ function App() {
       return;
     }
 
-    // 검색창 입력값으로 제품명 앞부분 startsWith로 필터링
     const lower = value.toLowerCase();
     const filtered = data.filter((item) =>
       item["제품명"]?.toLowerCase().startsWith(lower)
@@ -33,24 +33,27 @@ function App() {
     setSuggestions(filtered);
   };
 
-  // 검색 결과 클릭 시 작동
+  // 검색 추천어 클릭했을 때
   const handleSuggestionClick = (item) => {
     setQuery(item["제품명"]);
     setSelectedDrug(item);
     setSuggestions([]);
     setSameDoseOnly(false);
+    setOnlyAvailable(false);
     setSelectedCategory(null);
   };
 
-  // 카테고리 버튼 클릭 시 작동
+  // 카테고리 버튼 클릭했을 때
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
     setQuery("");
     setSelectedDrug(null);
     setSuggestions([]);
+    setSameDoseOnly(false);
+    setOnlyAvailable(false);
   };
 
-  // 선택한 약물/카테고리에 맞춰서 필터링하는 함수
+  // 약물 리스트 필터링하는 함수
   const getFilteredDrugs = () => {
     if (selectedDrug) {
       const baseIngredient = selectedDrug["성분"]?.replace(/,$/, "").trim();
@@ -59,10 +62,14 @@ function App() {
       const filtered = data.filter((item) => {
         const sameIngredient = item["성분"]?.replace(/,$/, "").trim() === baseIngredient;
         const sameDose = item["용량"]?.trim() === baseDose;
-        return sameIngredient && (!sameDoseOnly || sameDose);
+        const available = item["품절"] === "정상유통";
+
+        return sameIngredient &&
+          (!sameDoseOnly || sameDose) &&
+          (!onlyAvailable || available);
       });
 
-      // 선택한 약물이 제일 위에 오도록 정렬
+      // 선택한 약물이 가장 위로
       const sorted = [
         selectedDrug,
         ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
@@ -72,26 +79,29 @@ function App() {
     }
 
     if (selectedCategory) {
-      return data.filter((item) => item["분류"] === selectedCategory);
+      const filtered = data.filter((item) => item["분류"] === selectedCategory);
+
+      // 카테고리 결과에도 거래가능 체크 반영
+      if (onlyAvailable) {
+        return filtered.filter((item) => item["품절"] === "정상유통");
+      }
+      return filtered;
     }
 
     return [];
   };
 
   return (
-    // 최상단 div - 화면 전체를 감쌈
-    // overflowX: hidden → 모바일 가로 스크롤 막기!
+    // 페이지 전체 감싸는 div - 모바일 스크롤바 방지
     <div style={{ width: "100%", maxWidth: "100vw", overflowX: "hidden", padding: "20px", fontFamily: "sans-serif", margin: "0 auto" }}>
-      
+
       {/* 검색창 영역 */}
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
         <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
 
         <div style={{ display: "flex", gap: "8px" }}>
           <div style={{ position: "relative", flexGrow: 1 }}>
-            {/* 검색 아이콘 */}
             <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
-            {/* 검색 input */}
             <input
               ref={inputRef}
               type="text"
@@ -108,7 +118,7 @@ function App() {
                 boxSizing: "border-box"
               }}
             />
-            {/* 검색 자동완성 드롭다운 */}
+            {/* 자동완성 추천 리스트 */}
             <ul style={{
               listStyle: "none",
               paddingLeft: 0,
@@ -133,7 +143,7 @@ function App() {
         </div>
       </div>
 
-      {/* 아무것도 선택 안 했을 때 보여주는 화면 (카테고리+안내) */}
+      {/* 아무것도 검색/선택 안했을 때 보여주는 카테고리+안내 */}
       {!selectedDrug && !selectedCategory && (
         <>
           <h3 style={{ fontSize: "16px", marginTop: "20px", marginBottom: "8px" }}>약물 카테고리</h3>
@@ -168,11 +178,11 @@ function App() {
         </>
       )}
 
-      {/* 약물 선택 or 카테고리 선택한 경우 */}
+      {/* 검색 결과 or 카테고리 결과 */}
       {(selectedDrug || selectedCategory) && (
         <div style={{ width: "100%" }}>
-          
-          {/* 상단 타이틀 + 메인으로 돌아가기 버튼 */}
+
+          {/* 상단 타이틀 + 돌아가기 버튼 */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "20px", marginBottom: "10px" }}>
             <h2 style={{ fontSize: "20px" }}>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); setQuery(""); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>
@@ -180,7 +190,7 @@ function App() {
             </span>
           </div>
 
-          {/* 동일성분이면 성분명+용량 보여주기 */}
+          {/* 동일성분조회 - 성분+용량 보여주기 */}
           {selectedDrug && (
             <div style={{ marginBottom: "10px" }}>
               <div style={{ fontSize: "16px" }}>
@@ -189,14 +199,21 @@ function App() {
             </div>
           )}
 
-          {/* 동일 용량만 보기 체크박스 */}
+          {/* 체크박스: 동일 용량 / 거래 가능 */}
           {selectedDrug && (
-            <label style={{ marginBottom: "8px", display: "block" }}>
-              <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량만 보기
-            </label>
+            <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "8px" }}>
+              <label>
+                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} />
+                &nbsp;동일 용량
+              </label>
+              <label>
+                <input type="checkbox" checked={onlyAvailable} onChange={() => setOnlyAvailable(!onlyAvailable)} />
+                &nbsp;거래 가능
+              </label>
+            </div>
           )}
 
-          {/* 테이블 스크롤 영역 시작 */}
+          {/* 테이블 영역 */}
           <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "400px", overscrollBehavior: "contain" }}>
             <div style={{ width: "fit-content", minWidth: "100%" }}>
               <table style={{
@@ -218,23 +235,15 @@ function App() {
                 <tbody>
                   {getFilteredDrugs().map((drug, index) => (
                     <tr key={index}>
-                      {/* 제품명 (왼쪽 고정) */}
                       <td style={stickyCellStyle}>{drug["제품명"]}</td>
-
-                      {/* 성분명 */}
                       {selectedDrug ? null : (
                         <td style={cellStyle}>{drug["성분"]}</td>
                       )}
-
-                      {/* 나머지 셀들 */}
-                      {["용량", "제약사", "약가", "요율", "환산액"].map((field) => (
-                        <td key={field} style={cellStyle}>{drug[field]}</td>
-                      ))}
-
-                      {/* 품절만 한줄 유지 */}
+                      <td style={cellStyle}>{drug["용량"]}</td>
+                      <td style={cellStyle}>{drug["제약사"]}</td>
+                      <td style={cellStyle}>{drug["약가"]}</td>
+                      <td style={cellStyle}>{drug["요율"]}</td>
                       <td style={nowrapCellStyle}>{drug["품절"]}</td>
-
-                      {/* 비고 (없으면 '-') */}
                       <td style={cellStyle}>{drug["비고"] || "-"}</td>
                     </tr>
                   ))}
@@ -242,6 +251,7 @@ function App() {
               </table>
             </div>
           </div>
+
         </div>
       )}
 
@@ -249,11 +259,12 @@ function App() {
       <div style={{ marginTop: "30px", fontSize: "13px", color: "#888", textAlign: "center" }}>
         HSY © 2025 | netizenlily@naver.com
       </div>
+
     </div>
   );
 }
 
-// 테이블 헤더 스타일
+// 테이블 스타일 모음
 const headerStyle = {
   padding: "14px",
   border: "1px solid #ccc",
@@ -264,7 +275,6 @@ const headerStyle = {
   zIndex: 2
 };
 
-// 일반 셀 스타일 (줄넘김 허용)
 const cellStyle = {
   padding: "14px",
   border: "1px solid #eee",
@@ -273,14 +283,12 @@ const cellStyle = {
   wordBreak: "keep-all"
 };
 
-// 품절 셀 스타일 (한줄 유지)
 const nowrapCellStyle = {
   padding: "14px",
   border: "1px solid #eee",
   whiteSpace: "nowrap"
 };
 
-// 왼쪽 고정 셀 (제품명)
 const stickyCellStyle = {
   ...cellStyle,
   background: "#fff",
