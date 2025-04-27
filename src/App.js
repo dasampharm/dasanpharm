@@ -9,7 +9,7 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [sameDoseOnly, setSameDoseOnly] = useState(false);
-  const [availableOnly, setAvailableOnly] = useState(false); // ✅ 추가: 거래 가능 필터
+  const [availableOnly, setAvailableOnly] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const inputRef = useRef(null);
 
@@ -71,12 +71,26 @@ function App() {
       filtered = data.filter((item) => item["분류"] === selectedCategory);
     }
 
-    // ✅ 거래 가능(품절 = 정상유통) 필터 적용
     if (availableOnly) {
       filtered = filtered.filter((item) => item["품절"] === "정상유통");
     }
 
     return filtered;
+  };
+
+  const breakText = (text, limit = 8) => {
+    // ✅ 8글자 초과 시 줄바꿈 삽입하는 함수
+    if (!text) return "";
+    if (text.length <= limit) return text;
+    const first = text.slice(0, limit);
+    const second = text.slice(limit);
+    return (
+      <>
+        {first}
+        <br />
+        {second}
+      </>
+    );
   };
 
   return (
@@ -111,7 +125,6 @@ function App() {
         </div>
       </div>
 
-      {/* 카테고리 / 안내사항 */}
       {!selectedDrug && !selectedCategory && (
         <>
           <h3 style={{ fontSize: "16px", marginTop: "20px", marginBottom: "8px" }}>약물 카테고리</h3>
@@ -130,7 +143,6 @@ function App() {
         </>
       )}
 
-      {/* 결과 테이블 */}
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "20px", width: "100%", overflowX: "auto" }}>
           {selectedDrug && (
@@ -139,13 +151,11 @@ function App() {
             </div>
           )}
 
-          {/* 타이틀과 버튼 */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
             <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
-          {/* 체크박스들 */}
           {selectedDrug && (
             <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "12px" }}>
               <label>
@@ -158,36 +168,40 @@ function App() {
           )}
 
           <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
-            <table style={{ minWidth: "900px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
+            <table style={{ minWidth: "1000px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, maxWidth: "10em", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all" }}>제품명</th>
+                  <th style={{ width: "180px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
                   {selectedDrug ? null : (
-                    <th style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, whiteSpace: "normal", overflowWrap: "break-word" }}>성분</th>
+                    <th style={{ width: "160px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2 }}>성분</th>
                   )}
-                  {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2, whiteSpace: "normal", overflowWrap: "break-word" }}>{label}</th>
-                  ))}
+                  <th style={{ width: "100px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>용량</th>
+                  <th style={{ width: "140px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>제약사</th>
+                  <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>약가</th>
+                  <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>요율</th>
+                  <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>환산액</th>
+                  <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>품절</th>
+                  <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>비고</th>
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "14px", border: "1px solid #eee", maxWidth: "10em", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all", position: "sticky", left: 0, background: "#fff", zIndex: 1 }}>{drug["제품명"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", background: "#fff", position: "sticky", left: 0, zIndex: 1 }}>
+                      {breakText(drug["제품명"])}
+                    </td>
                     {selectedDrug ? null : (
-                      <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "normal", overflowWrap: "break-word" }}>{drug["성분"]}</td>
-                    )}
-                    {/* ✅ 품절 항목만 nowrap 유지, 나머지는 break-word */}
-                    {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((field, i) => (
-                      <td key={i} style={{
-                        padding: "14px",
-                        border: "1px solid #eee",
-                        whiteSpace: field === "품절" ? "nowrap" : "normal",
-                        overflowWrap: field === "품절" ? "normal" : "break-word"
-                      }}>
-                        {drug[field]}
+                      <td style={{ padding: "14px", border: "1px solid #eee" }}>
+                        {breakText(drug["성분"])}
                       </td>
-                    ))}
+                    )}
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["용량"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["제약사"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["약가"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["요율"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["환산액"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["품절"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["비고"]}</td>
                   </tr>
                 ))}
               </tbody>
