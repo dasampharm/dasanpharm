@@ -162,8 +162,8 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "5px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "5px" }}>
+        <div style={{ marginTop: "1px", width: "100%", overflowX: "auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1px" }}>
             <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
@@ -176,10 +176,10 @@ function App() {
 
           {selectedDrug && (
             <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "17px" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "17px" }}>
                 <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
               </label>
             </div>
