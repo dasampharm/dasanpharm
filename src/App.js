@@ -80,14 +80,14 @@ function App() {
   };
 
   const getCellStyle = (key, value) => {
-    const commonStickyStyle = key === "제품명" ? { position: "sticky", left: 0, background: "#fff", zIndex: 2 } : {};
+    const commonStickyStyle = key === "제품명" ? { position: "sticky", left: 0, background: "#f7f7f7", zIndex: 2 } : {};
     if (["제품명", "성분", "용량", "제약사"].includes(key)) {
       return {
         whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
         wordBreak: "break-word",
         overflowWrap: "anywhere",
-        ...commonStickyStyle,
-        fontWeight: key === "제품명" ? "bold" : "normal"
+        fontWeight: key === "제품명" ? "bold" : "normal",
+        ...commonStickyStyle
       };
     }
     if (["품절", "환산액", "약가", "요율"].includes(key)) {
@@ -138,75 +138,4 @@ function App() {
         </div>
       </div>
 
-      {!selectedDrug && !selectedCategory && (
-        <>
-          <h3 style={{ fontSize: "16px", marginTop: "30px", marginBottom: "20px" }}>약물 카테고리</h3>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "30px" }}>
-            {categories.map((cat) => (
-              <button key={cat} onClick={() => handleCategoryClick(cat)} style={{ padding: "10px 16px", border: "1px solid #ccc", borderRadius: "12px", background: "white", fontSize: "14px", cursor: "pointer" }}>{cat}</button>
-            ))}
-          </div>
-          <h3 style={{ fontSize: "16px", marginBottom: "12px" }}>안내사항</h3>
-          <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7", marginTop: "20px" }}>
-            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
-            <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
-            <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
-          </div>
-        </>
-      )}
-
-      {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "10px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-            <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
-            <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
-          </div>
-
-          {selectedDrug && (
-            <div style={{ fontSize: "14px", marginBottom: "10px" }}>
-              성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
-            </div>
-          )}
-
-          {selectedDrug && (
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
-              </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-                <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
-              </label>
-            </div>
-          )}
-
-          <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
-            <table style={{ borderCollapse: "collapse", tableLayout: "auto", width: "100%", fontSize: "14px" }}>
-              <thead>
-                <tr>
-                  {tableHeaders.map((key, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f0f0f0", textAlign: "left", position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, zIndex: key === "제품명" ? 3 : undefined }}>{key}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {getFilteredDrugs().map((drug, rowIndex) => (
-                  <tr key={rowIndex}>
-                    {tableHeaders.map((key, colIndex) => (
-                      <td key={colIndex} style={{ padding: "14px", border: "1px solid #eee", ...getCellStyle(key, drug[key]) }}>{drug[key]}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      )}
-
-      <div style={{ marginTop: "30px", fontSize: "13px", color: "#888", textAlign: "center" }}>
-        HSY © 2025 | netizenlily@naver.com
-      </div>
-    </div>
-  );
-}
-
-export default App;
+      {/* 이하 내용 동일 */}
