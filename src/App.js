@@ -1,4 +1,3 @@
-// 수정된 App.js 코드 (요청한 사항 모두 반영)
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
@@ -10,7 +9,7 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [sameDoseOnly, setSameDoseOnly] = useState(false);
-  const [availableOnly, setAvailableOnly] = useState(false); // 거래 가능 버튼
+  const [availableOnly, setAvailableOnly] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const inputRef = useRef(null);
 
@@ -19,10 +18,12 @@ function App() {
     setQuery(value);
     setSelectedDrug(null);
     setSelectedCategory(null);
+
     if (!value) {
       setSuggestions([]);
       return;
     }
+
     const lower = value.toLowerCase();
     const filtered = data.filter((item) =>
       item["제품명"]?.toLowerCase().startsWith(lower)
@@ -94,69 +95,45 @@ function App() {
             value={query}
             onChange={handleInputChange}
             placeholder="제품명을 검색하세요"
-            style={{
-              width: "100%",
-              padding: "16px 16px 16px 42px",
-              fontSize: "16px",
-              border: "1px solid #ccc",
-              borderRadius: "14px",
-              backgroundColor: "#f5f5f5"
-            }}
+            style={{ width: "100%", padding: "16px 16px 16px 42px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "14px", backgroundColor: "#f5f5f5" }}
           />
-          <ul style={{ maxHeight: "200px", overflowY: "auto", border: suggestions.length ? "1px solid #ccc" : "none" }}>
-            {suggestions.map((item, index) => (
-              <li key={index} onClick={() => handleSuggestionClick(item)}>{item["제품명"]}</li>
-            ))}
-          </ul>
         </div>
       </div>
 
       {(selectedDrug || selectedCategory) && (
-        <div>
+        <div style={{ marginTop: "20px" }}>
           <button onClick={handleMainClick}>메인으로 돌아가기</button>
           {selectedDrug && (
-            <>
-              <label>
-                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
-              </label>
-              <label style={{ marginLeft: "10px" }}>
-                <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
-              </label>
-            </>
+            <div>
+              <label><input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량</label>
+              <label style={{ marginLeft: "10px" }}><input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능</label>
+            </div>
           )}
-          <table style={{ width: "100%", overflowX: "auto", borderCollapse: "collapse" }}>
-            <thead>
-              <tr>
-                {Object.keys(data[0]).map((key, idx) => (
-                  <th key={idx} style={{ border: "1px solid #ccc", padding: "8px" }}>{key}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {getFilteredDrugs().map((drug, idx) => (
-                <tr key={idx}>
-                  {Object.keys(drug).map((key, index) => (
-                    <td
-                      key={index}
-                      style={{
-                        border: "1px solid #eee",
-                        padding: "8px",
-                        whiteSpace: key === "품절" ? "nowrap" : "normal",
-                        wordBreak: "break-word"
-                      }}
-                    >
-                      {drug[key]}
-                    </td>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: 0 }}>
+              <thead>
+                <tr>
+                  {Object.keys(data[0]).map((key, idx) => (
+                    <th key={idx} style={{ border: "1px solid #ccc", padding: "8px", position: "sticky", top: 0, background: "#fff", zIndex: 2, whiteSpace: key === "품절" ? "nowrap" : "normal" }}>{key}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {getFilteredDrugs().map((drug, idx) => (
+                  <tr key={idx}>
+                    {Object.keys(drug).map((key, index) => (
+                      <td key={index} style={{ border: "1px solid #eee", padding: "8px", whiteSpace: key === "품절" ? "nowrap" : "normal", position: index === 0 ? "sticky" : "static", left: index === 0 ? 0 : "auto", background: "#fff" }}>{drug[key]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
       {!selectedDrug && !selectedCategory && categories.map(cat => (
-        <button key={cat} onClick={() => handleCategoryClick(cat)}>{cat}</button>
+        <button key={cat} onClick={() => handleCategoryClick(cat)} style={{ margin: "4px" }}>{cat}</button>
       ))}
     </div>
   );
