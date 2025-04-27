@@ -55,8 +55,9 @@ function App() {
         return sameIngredient && (!sameDoseOnly || sameDose);
       });
       filtered = [
-        selectedDrug,
-        ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
+          selectedDrug,
+          ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
+        .sort((a, b) => (parseFloat(b["요율"]) || 0) - (parseFloat(a["요율"]) || 0))
       ];
     } else if (selectedCategory) {
       filtered = data.filter((item) => item["분류"] === selectedCategory);
