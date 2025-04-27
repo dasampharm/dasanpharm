@@ -9,7 +9,7 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [sameDoseOnly, setSameDoseOnly] = useState(false);
-  const [onlyNormalStock, setOnlyNormalStock] = useState(false); // ✅ 추가: 정상유통만 보기 상태
+  const [onlyNormalStock, setOnlyNormalStock] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const inputRef = useRef(null);
 
@@ -114,7 +114,6 @@ function App() {
         </div>
       </div>
 
-      {/* 안내/카테고리 */}
       {!selectedDrug && !selectedCategory && (
         <>
           <h3 style={{ fontSize: "16px", marginTop: "20px", marginBottom: "8px" }}>약물 카테고리</h3>
@@ -149,25 +148,25 @@ function App() {
         </>
       )}
 
-      {/* 결과 테이블 */}
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "20px", width: "100%", overflowX: "auto", overscrollBehavior: "contain" }}>
+        <div style={{ marginTop: "20px", width: "100%" }}>
           {selectedDrug && (
             <div style={{ marginBottom: "8px" }}>
               <div style={{ fontSize: "16px" }}>성분: {selectedDrug["성분"]} {selectedDrug["용량"]}</div>
             </div>
           )}
 
-          {/* 버튼 2개 */}
-          <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "8px" }}>
-            {selectedDrug && (
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
+            <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+              {selectedDrug && (
+                <label>
+                  <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
+                </label>
+              )}
               <label>
-                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
+                <input type="checkbox" checked={onlyNormalStock} onChange={() => setOnlyNormalStock(!onlyNormalStock)} /> 정상 유통
               </label>
-            )}
-            <label>
-              <input type="checkbox" checked={onlyNormalStock} onChange={() => setOnlyNormalStock(!onlyNormalStock)} /> 정상 유통
-            </label>
+            </div>
             <span onClick={() => {
               setSelectedCategory(null);
               setSelectedDrug(null);
@@ -177,46 +176,53 @@ function App() {
             }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
-          <table style={{
-            minWidth: "900px",
-            borderCollapse: "separate",
-            borderSpacing: "0",
-            fontSize: "14px",
-            width: "100%",
-            marginBottom: "0"
-          }}>
-            <thead>
-              <tr>
-                {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((label, idx) => (
-                  <th key={idx} style={{
-                    padding: "14px",
-                    border: "1px solid #ccc",
-                    backgroundColor: "#f7f7f7",
-                    textAlign: "left",
-                    position: "sticky",
-                    top: 0,
-                    whiteSpace: "normal",
-                    overflowWrap: "break-word"
-                  }}>{label}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {getFilteredDrugs().map((drug, index) => (
-                <tr key={index}>
-                  {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((field, idx) => (
-                    <td key={idx} style={{
+          <div style={{ maxHeight: "450px", overflowY: "auto", overflowX: "auto" }}>
+            <table style={{
+              minWidth: "600px",
+              width: "100%",
+              maxWidth: "100%",
+              borderCollapse: "separate",
+              borderSpacing: "0",
+              fontSize: "14px",
+              tableLayout: "fixed"
+            }}>
+              <thead>
+                <tr>
+                  {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((label, idx) => (
+                    <th key={idx} style={{
                       padding: "14px",
-                      border: "1px solid #eee",
-                      whiteSpace: field === "품절" ? "nowrap" : "normal",
-                      overflowWrap: field === "품절" ? "normal" : "break-word",
-                      fontSize: "14px"
-                    }}>{drug[field]}</td>
+                      border: "1px solid #ccc",
+                      backgroundColor: "#f7f7f7",
+                      textAlign: "left",
+                      position: "sticky",
+                      top: 0,
+                      zIndex: 2,
+                      whiteSpace: "normal",
+                      wordBreak: "keep-all"
+                    }}>{label}</th>
                   ))}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {getFilteredDrugs().map((drug, index) => (
+                  <tr key={index}>
+                    {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((field, idx) => (
+                      <td key={idx} style={{
+                        padding: "14px",
+                        border: "1px solid #eee",
+                        whiteSpace: field === "품절" ? "nowrap" : "normal",
+                        overflowWrap: field === "품절" ? "normal" : "break-word",
+                        fontSize: "14px",
+                        position: field === "제품명" ? "sticky" : "",
+                        left: field === "제품명" ? 0 : "",
+                        background: field === "제품명" ? "#fff" : ""
+                      }}>{drug[field]}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
