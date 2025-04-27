@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
 
-const categories = ["소화기계", "호흡기계", "항생제", "순환기계", "당뇨병용제", "정신신경계"];
+const categories = ["소화기계", "호신기계", "항생제", "순환기계", "당노병용제", "정신신경계"];
 
 function App() {
   const [query, setQuery] = useState("");
@@ -56,10 +56,9 @@ function App() {
         const sameDose = item["용량"]?.trim() === baseDose;
         return sameIngredient && (!sameDoseOnly || sameDose);
       });
-      filtered = [
-        selectedDrug,
-        ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
-      ];
+      filtered = filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"]);
+      filtered.sort((a, b) => (parseFloat(b["요율"]) || 0) - (parseFloat(a["요율"]) || 0));
+      filtered = [selectedDrug, ...filtered];
     } else if (selectedCategory) {
       filtered = data.filter((item) => item["분류"] === selectedCategory);
     }
@@ -92,40 +91,11 @@ function App() {
         }
       : {};
 
-    if (key === "제품명" || key === "성분") {
-      return {
-        whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
-        wordBreak: "break-word",
-        overflowWrap: "anywhere",
-        ...commonStickyStyle,
-      };
-    }
-    if (key === "비고") {
-      return {
-        whiteSpace: value && value.length > 25 ? "normal" : "nowrap",
-        wordBreak: "break-word",
-        overflowWrap: "anywhere",
-        ...commonStickyStyle,
-      };
-    }
-    if (key === "제약사" || key === "용량") {
-      return {
-        whiteSpace: value && value.length > 7 ? "normal" : "nowrap",
-        wordBreak: "break-word",
-        overflowWrap: "anywhere",
-        ...commonStickyStyle,
-      };
-    }
-    if (["약가", "요율", "환산액", "품절"].includes(key)) {
-      return {
-        whiteSpace: "nowrap",
-        ...commonStickyStyle,
-      };
-    }
     return {
-      whiteSpace: "normal",
+      whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
       wordBreak: "break-word",
       overflowWrap: "anywhere",
+      borderRight: "1px solid #ccc",
       ...commonStickyStyle,
     };
   };
@@ -192,7 +162,7 @@ function App() {
       {!selectedDrug && !selectedCategory && (
         <>
           <h3 style={{ fontSize: "16px", marginTop: "30px", marginBottom: "20px" }}>약물 카테고리</h3>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "30px" }}>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "50px" }}>
             {categories.map((cat) => (
               <button key={cat} onClick={() => handleCategoryClick(cat)} style={{
                 padding: "10px 16px",
@@ -224,27 +194,20 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "10px", width: "100%", overflowX: "auto" }}>
-          <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "10px",
-          }}>
+        <div style={{ marginTop: "30px", width: "100%", overflowX: "auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
             <h2 style={{ margin: 0 }}>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
-            <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>
-              메인으로 돌아가기
-            </span>
+            <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "16px", marginTop: "0px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "16px", marginTop: "0px", marginBottom: "20px" }}>
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
 
           {selectedDrug && (
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+            <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
               <label style={{ display: "flex", alignItems: "center", fontSize: "16px" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
@@ -256,20 +219,10 @@ function App() {
 
           <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
             <table style={{ borderCollapse: "collapse", tableLayout: "auto", width: "100%", fontSize: "14px" }}>
-              <thead>
+              <thead style={{ position: "sticky", top: 0, backgroundColor: "#f0f0f0", zIndex: 5 }}>
                 <tr>
                   {tableHeaders.map((key, i) => (
-                    <th key={i} style={{
-                      padding: "14px",
-                      border: "1px solid #ccc",
-                      backgroundColor: "#f0f0f0",
-                      textAlign: "left",
-                      position: key === "제품명" ? "sticky" : undefined,
-                      left: key === "제품명" ? 0 : undefined,
-                      zIndex: key === "제품명" ? 3 : undefined,
-                    }}>
-                      {key}
-                    </th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", textAlign: "left" }}>{key}</th>
                   ))}
                 </tr>
               </thead>
@@ -277,11 +230,7 @@ function App() {
                 {getFilteredDrugs().map((drug, rowIndex) => (
                   <tr key={rowIndex}>
                     {tableHeaders.map((key, colIndex) => (
-                      <td key={colIndex} style={{
-                        padding: "14px",
-                        border: "1px solid #eee",
-                        ...getCellStyle(key, drug[key]),
-                      }}>
+                      <td key={colIndex} style={{ padding: "14px", border: "1px solid #eee", ...getCellStyle(key, drug[key]) }}>
                         {drug[key]}
                       </td>
                     ))}
