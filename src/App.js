@@ -159,14 +159,22 @@ function App() {
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "14px", border: "1px solid #999", background: "#f5f5f5", color: "#000", wordBreak: "keep-all", whiteSpace: drug["제품명"]?.length >= 8 ? "normal" : "nowrap", position: "sticky", left: 0, zIndex: 1, fontWeight: "bold" }}>{drug["제품명"]}</td>
-                    {selectedDrug ? null : <td style={{ padding: "14px", border: "1px solid #999", wordBreak: "keep-all", whiteSpace: drug["성분"]?.length >= 10 ? "normal" : "nowrap" }}>
+                    <td style={{ padding: "14px", border: "1px solid #999", background: "#f5f5f5", color: "#000", wordBreak: "keep-all", whiteSpace: drug["제품명"]?.length >= 6 ? "normal" : "nowrap", position: "sticky", left: 0, zIndex: 1, fontWeight: "bold" }}>{drug["제품명"]}</td>
+                    {selectedDrug ? null : <td style={{ padding: "14px", border: "1px solid #999", wordBreak: "keep-all", whiteSpace: drug["성분"]?.length >= 8 ? "normal" : "nowrap" }}>
 {drug["성분"]}</td>}
-                    {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((key, i) => (
-                      <td key={i} style={{ padding: "14px", border: "1px solid #999", wordBreak: key === "비고" ? "break-word" : "keep-all", whiteSpace: key === "약가" || key === "요율" || key === "품절" ? "nowrap" : (key === "비고" ? "normal" : "normal") }}>
-                        {drug[key]}
-                      </td>
-                    ))}
+                    <td key={i} style={{
+  padding: "14px",
+  border: "1px solid #999",
+  wordBreak: key === "비고" ? "break-word" : "keep-all",
+  whiteSpace:
+    key === "약가" || key === "요율" || key === "품절"
+      ? "nowrap"
+      : key === "비고"
+        ? (drug[key] && drug[key].length > 30 ? "normal" : "nowrap")
+        : "normal"
+}}>
+  {drug[key]}
+</td>
                   </tr>
                 ))}
               </tbody>
