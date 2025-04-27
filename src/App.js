@@ -83,7 +83,7 @@ function App() {
   };
 
   const getCellStyle = (key, value) => {
-    const commonStickyStyle = {};
+ 
     if (key === "제품명") {
       return {
         position: "sticky",
