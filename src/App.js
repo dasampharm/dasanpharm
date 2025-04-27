@@ -160,6 +160,7 @@ function App() {
               <thead>
                 <tr>
                   <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
+                  {selectedDrug ? null : <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", top: 0, zIndex: 3 }}>성분</th>}
                   {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
                     <th key={i} style={{ width: "60px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", top: 0, zIndex: 2 }}>{label}</th>
                   ))}
@@ -169,6 +170,7 @@ function App() {
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
                     <td style={{ width: "120px", padding: "14px", border: "1px solid #eee", background: "#fff", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", left: 0, zIndex: 1 }}>{drug["제품명"]}</td>
+                    {selectedDrug ? null : <td style={{ width: "120px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["성분"]}</td>}
                     {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((key, i) => (
                       <td key={i} style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug[key]}</td>
                     ))}
