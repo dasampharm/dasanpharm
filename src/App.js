@@ -158,42 +158,31 @@ function App() {
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
-          {selectedDrug && (
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} />
-                &nbsp;동일 용량
-              </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
-                <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} />
-                &nbsp;거래 가능
-              </label>
-            </div>
-          )}
-
           <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
-            <table style={{ borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%" }}>
+            <table style={{ borderCollapse: "collapse", tableLayout: "fixed", width: "100%", fontSize: "14px" }}>
               <thead>
                 <tr>
-                  <th style={{ width: "100px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", whiteSpace: "normal", wordBreak: "break-word", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
-                  <th style={{ width: "100px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", whiteSpace: "normal", wordBreak: "break-word", position: "sticky", top: 0, zIndex: 3 }}>성분</th>
+                  <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
+                  <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", top: 0, zIndex: 3 }}>성분</th>
                   {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                    <th key={i} style={{ width: "60px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", whiteSpace: label === "비고" ? "nowrap" : "normal", wordBreak: "keep-all", position: "sticky", top: 0, zIndex: 2 }}>{label}</th>
+                    <th key={i} style={{ width: "60px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", top: 0, zIndex: 2 }}>
+                      {label}
+                    </th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ width: "100px", padding: "14px", border: "1px solid #eee", background: "#fff", whiteSpace: "normal", wordBreak: "break-word", position: "sticky", left: 0, zIndex: 1 }}>{drug["제품명"]}</td>
-                    <td style={{ width: "100px", padding: "14px", border: "1px solid #eee", whiteSpace: "normal", wordBreak: "break-word" }}>{drug["성분"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
-                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
+                    <td style={{ width: "120px", padding: "14px", border: "1px solid #eee", background: "#fff", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", left: 0, zIndex: 1 }}>{drug["제품명"]}</td>
+                    <td style={{ width: "120px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["성분"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["용량"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["제약사"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["약가"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["요율"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["환산액"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["품절"]}</td>
+                    <td style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["비고"]}</td>
                   </tr>
                 ))}
               </tbody>
