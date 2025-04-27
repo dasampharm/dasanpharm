@@ -80,7 +80,10 @@ function App() {
   };
 
   const getColumnWidth = (key) => {
-    if (key === "제품명" || key === "성분") return "120px";
+    if (key === "제품명") return "96px";
+    if (key === "성분") return "120px";
+    if (key === "용량") return "40px";
+    if (key === "약가" || key === "요율") return "60px";
     if (key === "비고") return "auto";
     return "80px";
   };
@@ -151,11 +154,11 @@ function App() {
           )}
 
           <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
-            <table style={{ borderCollapse: "collapse", tableLayout: "auto", width: "100%", fontSize: "14px" }}>
+            <table style={{ borderCollapse: "collapse", tableLayout: "fixed", width: "100%", fontSize: "14px" }}>
               <thead>
                 <tr>
                   {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", minWidth: getColumnWidth(key), position: key === "제품명" ? "sticky" : "sticky", left: key === "제품명" ? 0 : undefined, top: 0, zIndex: key === "제품명" ? 3 : 2, background: "#f7f7f7" }}>{key}</th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", minWidth: getColumnWidth(key), position: key === "제품명" ? "sticky" : "static", left: key === "제품명" ? 0 : "auto", background: key === "제품명" ? "#f7f7f7" : undefined, zIndex: key === "제품명" ? 3 : 2 }}>{key}</th>
                   ))}
                 </tr>
               </thead>
@@ -163,7 +166,18 @@ function App() {
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
                     {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
-                      <td key={i} style={{ padding: "14px", border: "1px solid #eee", whiteSpace: key === "비고" && drug[key] && drug[key].length > 10 ? "normal" : key === "비고" ? "nowrap" : "normal", overflow: key === "비고" ? "visible" : "hidden", wordBreak: key === "비고" ? "break-word" : "break-word", overflowWrap: "anywhere", minWidth: getColumnWidth(key), background: key === "제품명" ? "#fff" : undefined, position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, zIndex: key === "제품명" ? 1 : undefined }}>{drug[key]}</td>
+                      <td key={i} style={{
+                        padding: "14px",
+                        border: "1px solid #eee",
+                        whiteSpace: key === "비고" && drug[key] && drug[key].length > 30 ? "normal" : "nowrap",
+                        wordBreak: "break-word",
+                        overflowWrap: "anywhere",
+                        minWidth: getColumnWidth(key),
+                        position: key === "제품명" ? "sticky" : "static",
+                        left: key === "제품명" ? 0 : "auto",
+                        background: key === "제품명" ? "#fff" : undefined,
+                        zIndex: key === "제품명" ? 2 : 1
+                      }}>{drug[key]}</td>
                     ))}
                   </tr>
                 ))}
