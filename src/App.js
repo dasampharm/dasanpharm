@@ -87,7 +87,7 @@ function App() {
         overflowWrap: "anywhere",
       };
     }
-    if (["품절", "환산액"].includes(key)) {
+    if (["품절", "환산액", "약가", "요율"].includes(key)) {
       return {
         whiteSpace: "nowrap",
       };
@@ -176,7 +176,7 @@ function App() {
               <thead>
                 <tr>
                   {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left" }}>{key}</th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, background: key === "제품명" ? "#f7f7f7" : undefined, zIndex: key === "제품명" ? 3 : undefined }}>{key}</th>
                   ))}
                 </tr>
               </thead>
@@ -184,7 +184,7 @@ function App() {
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
                     {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
-                      <td key={i} style={{ padding: "14px", border: "1px solid #eee", ...getCellStyle(key, drug[key]) }}>{drug[key]}</td>
+                      <td key={i} style={{ padding: "14px", border: "1px solid #eee", ...getCellStyle(key, drug[key]), position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, background: key === "제품명" ? "#fff" : undefined, zIndex: key === "제품명" ? 2 : undefined }}>{drug[key]}</td>
                     ))}
                   </tr>
                 ))}
