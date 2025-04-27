@@ -9,6 +9,7 @@ function App() {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedDrug, setSelectedDrug] = useState(null);
   const [sameDoseOnly, setSameDoseOnly] = useState(false);
+  const [availableOnly, setAvailableOnly] = useState(false); // ✅ 추가: 거래 가능 필터
   const [selectedCategory, setSelectedCategory] = useState(null);
   const inputRef = useRef(null);
 
@@ -17,6 +18,7 @@ function App() {
     setQuery(value);
     setSelectedDrug(null);
     setSelectedCategory(null);
+    setAvailableOnly(false);
 
     if (!value) {
       setSuggestions([]);
@@ -35,6 +37,7 @@ function App() {
     setSelectedDrug(item);
     setSuggestions([]);
     setSameDoseOnly(false);
+    setAvailableOnly(false);
     setSelectedCategory(null);
   };
 
@@ -43,32 +46,37 @@ function App() {
     setQuery("");
     setSelectedDrug(null);
     setSuggestions([]);
+    setAvailableOnly(false);
   };
 
   const getFilteredDrugs = () => {
+    let filtered = [];
+
     if (selectedDrug) {
       const baseIngredient = selectedDrug["성분"]?.replace(/,$/, "").trim();
       const baseDose = selectedDrug["용량"]?.trim();
 
-      const filtered = data.filter((item) => {
+      filtered = data.filter((item) => {
         const sameIngredient = item["성분"]?.replace(/,$/, "").trim() === baseIngredient;
         const sameDose = item["용량"]?.trim() === baseDose;
         return sameIngredient && (!sameDoseOnly || sameDose);
       });
 
-      const sorted = [
+      filtered = [
         selectedDrug,
         ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
       ];
-
-      return sorted;
+    }
+    else if (selectedCategory) {
+      filtered = data.filter((item) => item["분류"] === selectedCategory);
     }
 
-    if (selectedCategory) {
-      return data.filter((item) => item["분류"] === selectedCategory);
+    // ✅ 거래 가능(품절 = 정상유통) 필터 적용
+    if (availableOnly) {
+      filtered = filtered.filter((item) => item["품절"] === "정상유통");
     }
 
-    return [];
+    return filtered;
   };
 
   return (
@@ -103,6 +111,7 @@ function App() {
         </div>
       </div>
 
+      {/* 카테고리 / 안내사항 */}
       {!selectedDrug && !selectedCategory && (
         <>
           <h3 style={{ fontSize: "16px", marginTop: "20px", marginBottom: "8px" }}>약물 카테고리</h3>
@@ -121,6 +130,7 @@ function App() {
         </>
       )}
 
+      {/* 결과 테이블 */}
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "20px", width: "100%", overflowX: "auto" }}>
           {selectedDrug && (
@@ -129,15 +139,22 @@ function App() {
             </div>
           )}
 
+          {/* 타이틀과 버튼 */}
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
             <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
+          {/* 체크박스들 */}
           {selectedDrug && (
-            <label style={{ marginBottom: "8px", display: "block" }}>
-              <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량만 보기
-            </label>
+            <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "12px" }}>
+              <label>
+                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량
+              </label>
+              <label>
+                <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> &nbsp;거래 가능
+              </label>
+            </div>
           )}
 
           <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
@@ -160,13 +177,17 @@ function App() {
                     {selectedDrug ? null : (
                       <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "normal", overflowWrap: "break-word" }}>{drug["성분"]}</td>
                     )}
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "normal", overflowWrap: "break-word" }}>{drug["용량"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "normal", overflowWrap: "break-word", wordBreak: "keep-all" }}>{drug["제약사"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
+                    {/* ✅ 품절 항목만 nowrap 유지, 나머지는 break-word */}
+                    {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((field, i) => (
+                      <td key={i} style={{
+                        padding: "14px",
+                        border: "1px solid #eee",
+                        whiteSpace: field === "품절" ? "nowrap" : "normal",
+                        overflowWrap: field === "품절" ? "normal" : "break-word"
+                      }}>
+                        {drug[field]}
+                      </td>
+                    ))}
                   </tr>
                 ))}
               </tbody>
