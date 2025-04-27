@@ -146,7 +146,8 @@ function App() {
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1000px", margin: "0 auto" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
         <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+          {/* 여기 marginBottom을 20px → 10px 로 줄였음 */}
           <div style={{ position: "relative", flexGrow: 1 }}>
             <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
             <input
@@ -229,8 +230,9 @@ function App() {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: "8px",
+            marginBottom: "4px",
           }}>
+            {/* 여기 marginBottom을 8px → 4px로 줄였음 */}
             <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>
               메인으로 돌아가기
@@ -238,17 +240,18 @@ function App() {
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "14px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "16px", marginBottom: "6px" }}>
+              {/* 글자크기 14px → 16px, marginBottom 줄임 */}
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
 
           {selectedDrug && (
             <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "16px" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "16px" }}>
                 <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
               </label>
             </div>
