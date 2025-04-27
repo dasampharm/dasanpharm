@@ -172,7 +172,7 @@ function App() {
                     <td style={{ width: "120px", padding: "14px", border: "1px solid #eee", background: "#fff", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal", position: "sticky", left: 0, zIndex: 1 }}>{drug["제품명"]}</td>
                     {selectedDrug ? null : <td style={{ width: "120px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug["성분"]}</td>}
                     {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((key, i) => (
-                      <td key={i} style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: "break-word", overflowWrap: "anywhere", whiteSpace: "normal" }}>{drug[key]}</td>
+                      <td key={i} style={{ width: "60px", padding: "14px", border: "1px solid #eee", wordBreak: key === "비고" ? "normal" : "break-word", overflowWrap: key === "비고" ? "normal" : "anywhere", whiteSpace: key === "비고" ? "nowrap" : "normal" }}>{drug[key]}</td>
                     ))}
                   </tr>
                 ))}
