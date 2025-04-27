@@ -149,7 +149,7 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "20px", width: "100%" }}>
+        <div style={{ marginTop: "20px", width: "100%", overflowX: "auto", overflowY: "auto", maxHeight: "450px" }}>
           {selectedDrug && (
             <div style={{ marginBottom: "8px" }}>
               <div style={{ fontSize: "16px" }}>성분: {selectedDrug["성분"]} {selectedDrug["용량"]}</div>
@@ -176,53 +176,50 @@ function App() {
             }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
-          <div style={{ maxHeight: "450px", overflowY: "auto", overflowX: "auto" }}>
-            <table style={{
-              minWidth: "600px",
-              width: "100%",
-              maxWidth: "100%",
-              borderCollapse: "separate",
-              borderSpacing: "0",
-              fontSize: "14px",
-              tableLayout: "fixed"
-            }}>
-              <thead>
-                <tr>
-                  {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((label, idx) => (
-                    <th key={idx} style={{
+          <table style={{
+            width: "100%",
+            borderCollapse: "separate",
+            borderSpacing: "0",
+            fontSize: "14px",
+            tableLayout: "fixed"
+          }}>
+            <thead>
+              <tr>
+                {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((label, idx) => (
+                  <th key={idx} style={{
+                    padding: "14px",
+                    border: "1px solid #ccc",
+                    backgroundColor: "#f7f7f7",
+                    textAlign: "left",
+                    position: "sticky",
+                    top: 0,
+                    zIndex: 2,
+                    whiteSpace: "normal",
+                    wordBreak: "break-word"
+                  }}>{label}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {getFilteredDrugs().map((drug, index) => (
+                <tr key={index}>
+                  {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((field, idx) => (
+                    <td key={idx} style={{
                       padding: "14px",
-                      border: "1px solid #ccc",
-                      backgroundColor: "#f7f7f7",
-                      textAlign: "left",
-                      position: "sticky",
-                      top: 0,
-                      zIndex: 2,
-                      whiteSpace: "normal",
-                      wordBreak: "keep-all"
-                    }}>{label}</th>
+                      border: "1px solid #eee",
+                      whiteSpace: field === "품절" ? "nowrap" : "normal",
+                      overflowWrap: field === "품절" ? "normal" : "break-word",
+                      fontSize: "14px",
+                      position: field === "제품명" ? "sticky" : "",
+                      left: field === "제품명" ? 0 : "",
+                      background: field === "제품명" ? "#fff" : "",
+                      zIndex: field === "제품명" ? 3 : 1
+                    }}>{drug[field]}</td>
                   ))}
                 </tr>
-              </thead>
-              <tbody>
-                {getFilteredDrugs().map((drug, index) => (
-                  <tr key={index}>
-                    {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((field, idx) => (
-                      <td key={idx} style={{
-                        padding: "14px",
-                        border: "1px solid #eee",
-                        whiteSpace: field === "품절" ? "nowrap" : "normal",
-                        overflowWrap: field === "품절" ? "normal" : "break-word",
-                        fontSize: "14px",
-                        position: field === "제품명" ? "sticky" : "",
-                        left: field === "제품명" ? 0 : "",
-                        background: field === "제품명" ? "#fff" : ""
-                      }}>{drug[field]}</td>
-                    ))}
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
