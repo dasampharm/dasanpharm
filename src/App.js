@@ -59,6 +59,7 @@ function App() {
       filtered = [
         selectedDrug,
         ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
+          .sort((a, b) => (parseFloat(b["요율"]) || 0) - (parseFloat(a["요율"]) || 0))
       ];
     } else if (selectedCategory) {
       filtered = data.filter((item) => item["분류"] === selectedCategory);
@@ -122,23 +123,23 @@ function App() {
 
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "20px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-            <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+            <h2 style={{ marginBottom: "4px" }}>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "14px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "16px", marginBottom: "4px" }}>
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
 
           {selectedDrug && (
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+            <div style={{ display: "flex", gap: "10px", marginBottom: "10px", fontSize: "16px" }}>
+              <label style={{ display: "flex", alignItems: "center" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+              <label style={{ display: "flex", alignItems: "center" }}>
                 <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
               </label>
             </div>
@@ -148,22 +149,20 @@ function App() {
             <table style={{ borderCollapse: "collapse", tableLayout: "auto", width: "100%", fontSize: "14px" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "14px", border: "1px solid #999", backgroundColor: "#f7f7f7", color: "#666", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, minWidth: "140px" }}>제품명</th>
-                  {selectedDrug ? null : <th style={{ padding: "14px", border: "1px solid #999", backgroundColor: "#f7f7f7", color: "#666", textAlign: "left", position: "sticky", top: 0, zIndex: 3, minWidth: "140px" }}>성분</th>}
+                  <th style={{ padding: "14px", border: "1px solid #999", backgroundColor: "#ddd", color: "#333", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4, fontWeight: "bold", minWidth: "140px" }}>제품명</th>
+                  {selectedDrug ? null : <th style={{ padding: "14px", border: "1px solid #999", backgroundColor: "#ddd", color: "#333", textAlign: "left", position: "sticky", top: 0, zIndex: 3, fontWeight: "bold", minWidth: "140px" }}>성분</th>}
                   {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #999", backgroundColor: "#f7f7f7", color: "#666", textAlign: "left", position: "sticky", top: 0, zIndex: 2, minWidth: "80px" }}>{label}</th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #999", backgroundColor: "#ddd", color: "#333", textAlign: "left", position: "sticky", top: 0, zIndex: 2, fontWeight: "bold", minWidth: "80px" }}>{label}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "14px", border: "1px solid #999", background: "#fff", color: "#666", wordBreak: "keep-all", overflowWrap: "normal", whiteSpace: drug["제품명"]?.length >= 9 ? "normal" : "nowrap", position: "sticky", left: 0, zIndex: 1 }}>
-                      {drug["제품명"]}
-                    </td>
-                    {selectedDrug ? null : <td style={{ padding: "14px", border: "1px solid #999", wordBreak: "keep-all", overflowWrap: "normal", whiteSpace: "normal" }}>{drug["성분"]}</td>}
+                    <td style={{ padding: "14px", border: "1px solid #999", background: "#fff", color: "#666", wordBreak: "keep-all", whiteSpace: drug["제품명"]?.length >= 9 ? "normal" : "nowrap", position: "sticky", left: 0, zIndex: 1, fontWeight: "bold" }}>{drug["제품명"]}</td>
+                    {selectedDrug ? null : <td style={{ padding: "14px", border: "1px solid #999", wordBreak: "keep-all", whiteSpace: "normal" }}>{drug["성분"]}</td>}
                     {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((key, i) => (
-                      <td key={i} style={{ padding: "14px", border: "1px solid #999", wordBreak: key === "비고" ? "normal" : "keep-all", overflowWrap: key === "비고" ? "normal" : "normal", whiteSpace: key === "비고" ? "nowrap" : "normal" }}>
+                      <td key={i} style={{ padding: "14px", border: "1px solid #999", wordBreak: key === "비고" ? "break-word" : "keep-all", whiteSpace: key === "약가" || key === "요율" || key === "품절" ? "nowrap" : (key === "비고" ? "normal" : "normal") }}>
                         {drug[key]}
                       </td>
                     ))}
