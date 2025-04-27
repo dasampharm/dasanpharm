@@ -169,17 +169,17 @@ function App() {
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "14px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "20px", marginBottom: "10px" }}>
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
 
           {selectedDrug && (
             <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "20px" }}>
                 <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
               </label>
             </div>
