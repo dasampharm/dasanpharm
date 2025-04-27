@@ -79,7 +79,6 @@ function App() {
   };
 
   const breakText = (text, limit = 8) => {
-    // ✅ 8글자 초과 시 줄바꿈 삽입하는 함수
     if (!text) return "";
     if (text.length <= limit) return text;
     const first = text.slice(0, limit);
@@ -94,7 +93,7 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "800px", margin: "0 auto" }}>
+    <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1200px", margin: "0 auto" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
         <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
         <div style={{ display: "flex", gap: "8px" }}>
@@ -171,16 +170,16 @@ function App() {
             <table style={{ minWidth: "1000px", borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
               <thead>
                 <tr>
-                  <th style={{ width: "180px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
+                  <th style={{ width: "160px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
                   {selectedDrug ? null : (
-                    <th style={{ width: "160px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2 }}>성분</th>
+                    <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2 }}>성분</th>
                   )}
-                  <th style={{ width: "100px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>용량</th>
-                  <th style={{ width: "140px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>제약사</th>
+                  <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>용량</th>
+                  <th style={{ width: "130px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>제약사</th>
                   <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>약가</th>
                   <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>요율</th>
                   <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>환산액</th>
-                  <th style={{ width: "80px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>품절</th>
+                  <th style={{ width: "100px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", whiteSpace: "nowrap" }}>품절</th>
                   <th style={{ width: "120px", padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7" }}>비고</th>
                 </tr>
               </thead>
@@ -200,7 +199,7 @@ function App() {
                     <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["약가"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["요율"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["환산액"]}</td>
-                    <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["품절"]}</td>
+                    <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["비고"]}</td>
                   </tr>
                 ))}
