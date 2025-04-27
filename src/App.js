@@ -1,5 +1,3 @@
-// 전체 App.js 전문 업데이트 버전
-
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
@@ -179,12 +177,12 @@ function App() {
                       <td
                         key={i}
                         style={{
-                          minWidth: key === "비고" ? "100px" : "60px",
                           padding: "14px",
                           border: "1px solid #eee",
                           wordBreak: key === "비고" ? "normal" : "break-word",
                           overflowWrap: key === "비고" ? "normal" : "anywhere",
-                          whiteSpace: key === "비고" ? "nowrap" : "normal"
+                          whiteSpace: key === "비고" ? "nowrap" : "normal",
+                          overflow: key === "비고" ? "visible" : "hidden",
                         }}
                       >
                         {drug[key]}
