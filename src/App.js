@@ -80,19 +80,23 @@ function App() {
   };
 
   const getCellStyle = (key, value) => {
-    const commonStickyStyle = key === "제품명" ? { 
-      position: "sticky", 
-      left: 0, 
-      background: "#f7f7f7", 
+    const commonStickyStyle = key === "제품명" ? {
+      position: "sticky",
+      left: 0,
+      background: "#f7f7f7",
       zIndex: 2,
-      minWidth: "100px" 
+      minWidth: "100px",
+      fontWeight: "bold",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      wordBreak: "keep-all"
     } : {};
-    if (["제품명", "성분", "용량", "제약사"].includes(key)) {
+    if (["성분", "용량", "제약사"].includes(key)) {
       return {
         whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
         wordBreak: "break-word",
         overflowWrap: "anywhere",
-        fontWeight: key === "제품명" ? "bold" : "normal",
         ...commonStickyStyle
       };
     }
@@ -104,7 +108,7 @@ function App() {
     }
     if (key === "비고") {
       return {
-        whiteSpace: value && value.length > 25 ? "normal" : "nowrap",
+        whiteSpace: value && value.length > 15 ? "normal" : "nowrap",
         wordBreak: "break-word",
         overflowWrap: "anywhere",
         ...commonStickyStyle
@@ -123,8 +127,8 @@ function App() {
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1000px", margin: "0 auto" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
-        <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
+        <h1 style={{ fontSize: "26px", marginBottom: "10px" }}>약물 검색</h1>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "12px" }}>
           <div style={{ position: "relative", flexGrow: 1 }}>
             <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
             <input
@@ -162,24 +166,24 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "1px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1px" }}>
-            <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
+        <div style={{ marginTop: "10px", width: "100%", overflowX: "auto" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "4px" }}>
+            <h2 style={{ margin: 0 }}>동일성분조회</h2>
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "20px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "14px", marginBottom: "4px" }}>
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
 
           {selectedDrug && (
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "17px" }}>
+            <div style={{ display: "flex", gap: "12px", marginBottom: "12px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "17px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
                 <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
               </label>
             </div>
