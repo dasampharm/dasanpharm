@@ -122,26 +122,26 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ width: "100%", overflowX: "auto", overscrollBehavior: "contain" }}>
-          <div style={{ width: "fit-content", minWidth: "100%" }}>
-            {selectedDrug && (
-              <div style={{ marginBottom: "8px" }}>
-                <div style={{ fontSize: "16px" }}>성분: {selectedDrug["성분"]} {selectedDrug["용량"]}</div>
-              </div>
-            )}
+        <div style={{ width: "100%" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "20px", marginBottom: "10px" }}>
+            <h2 style={{ fontSize: "20px" }}>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
+            <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); setQuery(""); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
+          </div>
 
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-              <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
-              <span onClick={() => { setSelectedCategory(null); setSelectedDrug(null); setQuery(""); }} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
+          {selectedDrug && (
+            <div style={{ marginBottom: "10px" }}>
+              <div style={{ fontSize: "16px" }}>성분: {selectedDrug["성분"]} {selectedDrug["용량"]}</div>
             </div>
+          )}
 
-            {selectedDrug && (
-              <label style={{ marginBottom: "8px", display: "block" }}>
-                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량만 보기
-              </label>
-            )}
+          {selectedDrug && (
+            <label style={{ marginBottom: "8px", display: "block" }}>
+              <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> &nbsp;동일 용량만 보기
+            </label>
+          )}
 
-            <div style={{ maxHeight: "400px", overflowX: "auto", overflowY: "auto", position: "relative", overscrollBehavior: "contain" }}>
+          <div style={{ overflowX: "auto", overflowY: "auto", maxHeight: "400px", overscrollBehavior: "contain" }}>
+            <div style={{ width: "fit-content", minWidth: "100%" }}>
               <table style={{ borderCollapse: "separate", borderSpacing: "0", fontSize: "14px", width: "100%", marginBottom: "0" }}>
                 <thead>
                   <tr>
