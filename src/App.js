@@ -80,7 +80,13 @@ function App() {
   };
 
   const getCellStyle = (key, value) => {
-    const commonStickyStyle = key === "제품명" ? { position: "sticky", left: 0, background: "#f7f7f7", zIndex: 2 } : {};
+    const commonStickyStyle = key === "제품명" ? { 
+      position: "sticky", 
+      left: 0, 
+      background: "#f7f7f7", 
+      zIndex: 2,
+      minWidth: "100px" 
+    } : {};
     if (["제품명", "성분", "용량", "제약사"].includes(key)) {
       return {
         whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
