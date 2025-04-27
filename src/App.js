@@ -224,12 +224,12 @@ function App() {
       )}
 
       {(selectedDrug || selectedCategory) && (
-        <div style={{ marginTop: "0px", width: "100%", overflowX: "auto" }}>
+        <div style={{ marginTop: "5px", width: "100%", overflowX: "auto" }}>
           <div style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            marginBottom: "0px",
+            marginBottom: "5px",
           }}>
             <h2 style={{ margin: 0 }}>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>
@@ -238,7 +238,7 @@ function App() {
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "16px", marginTop: "2px", marginBottom: "6px" }}>
+            <div style={{ fontSize: "16px", marginTop: "6px", marginBottom: "6px" }}>
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
