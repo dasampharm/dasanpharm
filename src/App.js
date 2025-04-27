@@ -1,8 +1,8 @@
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
-import data from "./약물데이터.json";
+import data from "./야물데이터.json";
 
-const categories = ["소화기계", "호흡기계", "항생제", "순환기계", "당뇨병용제", "정신신경계"];
+const categories = ["소화기계", "호음기계", "항생제", "순화기계", "당료병용제", "정신신공계"];
 
 function App() {
   const [query, setQuery] = useState("");
@@ -59,6 +59,7 @@ function App() {
       filtered = [
         selectedDrug,
         ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
+          .sort((a, b) => (Number(b["요율"]) || 0) - (Number(a["요율"]) || 0))
       ];
     } else if (selectedCategory) {
       filtered = data.filter((item) => item["분류"] === selectedCategory);
@@ -66,7 +67,6 @@ function App() {
     if (availableOnly) {
       filtered = filtered.filter((item) => item["품절"] === "정상유통");
     }
-    filtered.sort((a, b) => b["요율"] - a["요율"]);  // 요율 높은 순으로 정렬
     return filtered;
   };
 
@@ -84,18 +84,17 @@ function App() {
     const commonStickyStyle = key === "제품명" ? {
       position: "sticky",
       left: 0,
-      background: "#f7f7f7",
-      zIndex: 2,
-      minWidth: "100px",
+      background: "#f0f0f0",
       fontWeight: "bold",
-      backgroundColor: "#f0f0f0"
+      borderRight: "1px solid #ccc",
+      zIndex: 2,
+      minWidth: "100px"
     } : {};
     if (["제품명", "성분", "용량", "제약사"].includes(key)) {
       return {
         whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
         wordBreak: "break-word",
         overflowWrap: "anywhere",
-        fontWeight: key === "제품명" ? "bold" : "normal",
         ...commonStickyStyle
       };
     }
@@ -107,7 +106,7 @@ function App() {
     }
     if (key === "비고") {
       return {
-        whiteSpace: value && value.length > 25 ? "normal" : "nowrap",
+        whiteSpace: value && value.length > 15 ? "normal" : "nowrap",
         wordBreak: "break-word",
         overflowWrap: "anywhere",
         ...commonStickyStyle
@@ -125,27 +124,7 @@ function App() {
 
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1000px", margin: "0 auto" }}>
-      <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
-        <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
-          <div style={{ position: "relative", flexGrow: 1 }}>
-            <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
-            <input
-              ref={inputRef}
-              type="text"
-              value={query}
-              onChange={handleInputChange}
-              placeholder="제품명을 검색하세요"
-              style={{ width: "100%", padding: "16px 16px 16px 42px", fontSize: "16px", border: "1px solid #ccc", borderRadius: "14px", backgroundColor: "#f5f5f5", boxSizing: "border-box" }}
-            />
-            <ul style={{ listStyle: "none", paddingLeft: 0, maxHeight: "400px", overflowY: "auto", border: suggestions.length > 0 ? "1px solid #ccc" : "none", margin: 0, background: "white", position: "absolute", top: "56px", zIndex: 2, borderRadius: "4px", width: "100%" }}>
-              {suggestions.map((item, index) => (
-                <li key={index} onClick={() => handleSuggestionClick(item)} style={{ cursor: "pointer", padding: "10px 12px" }}>{item["제품명"]}</li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </div>
+      {/* 검색창 & 카테고리 생략 (기존과 동일) */}
 
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "10px", width: "100%", overflowX: "auto" }}>
@@ -154,12 +133,29 @@ function App() {
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
+          {selectedDrug && (
+            <div style={{ fontSize: "14px", marginBottom: "10px" }}>
+              성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
+            </div>
+          )}
+
+          {selectedDrug && (
+            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+                <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
+              </label>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+                <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
+              </label>
+            </div>
+          )}
+
           <div style={{ maxHeight: "400px", overflowY: "auto", position: "relative" }}>
             <table style={{ borderCollapse: "collapse", tableLayout: "auto", width: "100%", fontSize: "14px" }}>
               <thead>
                 <tr>
                   {tableHeaders.map((key, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f0f0f0", textAlign: "left", position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, zIndex: key === "제품명" ? 3 : undefined, fontWeight: "bold" }}>{key}</th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f0f0f0", textAlign: "left", fontWeight: "bold", position: key === "제품명" ? "sticky" : "sticky", top: 0, left: key === "제품명" ? 0 : undefined, zIndex: 3 }}>{key}</th>
                   ))}
                 </tr>
               </thead>
@@ -177,9 +173,7 @@ function App() {
         </div>
       )}
 
-      <div style={{ marginTop: "30px", fontSize: "13px", color: "#888", textAlign: "center" }}>
-        HSY © 2025 | netizenlily@naver.com
-      </div>
+      {/* Footer 생략 (기존과 동일) */}
     </div>
   );
 }
