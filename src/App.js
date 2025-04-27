@@ -1,3 +1,5 @@
+// ✨제품명/성분은 최소 120px 확보, 나머지 칸 80px 확보, 비고칸은 무제한 확장✨ 반영된 최종 App.js
+
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
@@ -79,6 +81,12 @@ function App() {
     if (inputRef.current) inputRef.current.value = "";
   };
 
+  const getColumnWidth = (key) => {
+    if (key === "제품명" || key === "성분") return "120px";
+    if (key === "비고") return "auto";
+    return "80px";
+  };
+
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "800px", margin: "0 auto" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
@@ -148,32 +156,16 @@ function App() {
             <table style={{ borderCollapse: "collapse", tableLayout: "auto", width: "100%", fontSize: "14px" }}>
               <thead>
                 <tr>
-                  <th style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, left: 0, zIndex: 4 }}>제품명</th>
-                  {selectedDrug ? null : <th style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 3 }}>성분</th>}
-                  {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", position: "sticky", top: 0, zIndex: 2 }}>{label}</th>
+                  {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", minWidth: getColumnWidth(key), position: "sticky", top: 0, zIndex: 2 }}>{key}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
-                    <td style={{ padding: "14px", border: "1px solid #eee", background: "#fff", position: "sticky", left: 0, zIndex: 1 }}>{drug["제품명"]}</td>
-                    {selectedDrug ? null : <td style={{ padding: "14px", border: "1px solid #eee" }}>{drug["성분"]}</td>}
-                    {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((key, i) => (
-                      <td
-                        key={i}
-                        style={{
-                          padding: "14px",
-                          border: "1px solid #eee",
-                          whiteSpace: key === "비고" ? "nowrap" : "normal",
-                          overflow: key === "비고" ? "visible" : "hidden",
-                          wordBreak: key === "비고" ? "normal" : "break-word",
-                          overflowWrap: "anywhere"
-                        }}
-                      >
-                        {drug[key]}
-                      </td>
+                    {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
+                      <td key={i} style={{ padding: "14px", border: "1px solid #eee", whiteSpace: key === "비고" ? "nowrap" : "normal", overflow: key === "비고" ? "visible" : "hidden", wordBreak: key === "비고" ? "normal" : "break-word", overflowWrap: "anywhere", minWidth: getColumnWidth(key) }}>{drug[key]}</td>
                     ))}
                   </tr>
                 ))}
