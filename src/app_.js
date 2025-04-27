@@ -181,14 +181,12 @@ function App() {
                     position: "sticky", top: 0, left: 0, zIndex: 4,
                     whiteSpace: "normal", wordBreak: "break-word"
                   }}>제품명</th>
-                  {selectedDrug ? null : (
-                    <th style={{
-                      width: "18%", padding: "14px", border: "1px solid #ccc",
-                      backgroundColor: "#f7f7f7", textAlign: "left",
-                      position: "sticky", top: 0, zIndex: 2,
-                      whiteSpace: "normal", wordBreak: "break-word"
-                    }}>성분</th>
-                  )}
+                  <th style={{
+                    width: "18%", padding: "14px", border: "1px solid #ccc",
+                    backgroundColor: "#f7f7f7", textAlign: "left",
+                    position: "sticky", top: 0, zIndex: 2,
+                    whiteSpace: "normal", wordBreak: "break-word"
+                  }}>성분</th>
                   {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
                     <th key={i} style={{
                       width: "10%", padding: "14px", border: "1px solid #ccc",
@@ -208,12 +206,10 @@ function App() {
                       position: "sticky", left: 0, zIndex: 1,
                       whiteSpace: "normal", wordBreak: "break-word"
                     }}>{drug["제품명"]}</td>
-                    {selectedDrug ? null : (
-                      <td style={{
-                        padding: "14px", border: "1px solid #eee",
-                        whiteSpace: "normal", wordBreak: "break-word"
-                      }}>{drug["성분"]}</td>
-                    )}
+                    <td style={{
+                      padding: "14px", border: "1px solid #eee",
+                      whiteSpace: "normal", wordBreak: "break-word"
+                    }}>{drug["성분"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["용량"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["제약사"]}</td>
                     <td style={{ padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
