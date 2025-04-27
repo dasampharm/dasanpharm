@@ -104,7 +104,7 @@ function App() {
     }
     if (key === "비고") {
       return {
-        whiteSpace: value && value.length > 15 ? "normal" : "nowrap",
+        whiteSpace: value && value.length > 25 ? "normal" : "nowrap",
         wordBreak: "break-word",
         overflowWrap: "anywhere",
         ...commonStickyStyle
