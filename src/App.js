@@ -1,6 +1,3 @@
-// 전체 App.js 파일 - 비고 칸 무제한 확장 완벽 반영
-// table-layout: auto로 조정하여 비고칸 자연스럽게 늘어나게!
-
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
@@ -105,6 +102,23 @@ function App() {
           </div>
         </div>
       </div>
+
+      {!selectedDrug && !selectedCategory && (
+        <>
+          <h3 style={{ fontSize: "16px", marginTop: "20px", marginBottom: "8px" }}>약물 카테고리</h3>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", marginBottom: "20px" }}>
+            {categories.map((cat) => (
+              <button key={cat} onClick={() => handleCategoryClick(cat)} style={{ padding: "10px 16px", border: "1px solid #ccc", borderRadius: "12px", background: "white", fontSize: "14px", cursor: "pointer" }}>{cat}</button>
+            ))}
+          </div>
+          <h3 style={{ fontSize: "16px", marginBottom: "8px" }}>안내사항</h3>
+          <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7" }}>
+            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
+            <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
+            <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
+          </div>
+        </>
+      )}
 
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "20px", width: "100%", overflowX: "auto" }}>
