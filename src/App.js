@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
-import data from "./철물데이터.json";
+import data from "./약물데이터.json";
 
 const categories = ["소화기계", "호흡기계", "항생제", "순환기계", "당뇨병용제", "정신신경계"];
 
