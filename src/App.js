@@ -1,5 +1,3 @@
-// ✨제품명/성분은 최소 120px 확보, 나머지 칸 80px 확보, 비고칸은 무제한 확장✨ 반영된 최종 App.js
-
 import React, { useState, useRef } from "react";
 import { FaSearch } from "react-icons/fa";
 import data from "./약물데이터.json";
@@ -157,7 +155,7 @@ function App() {
               <thead>
                 <tr>
                   {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", minWidth: getColumnWidth(key), position: "sticky", top: 0, zIndex: 2 }}>{key}</th>
+                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f7f7f7", textAlign: "left", minWidth: getColumnWidth(key), position: key === "제품명" ? "sticky" : "sticky", left: key === "제품명" ? 0 : undefined, top: 0, zIndex: key === "제품명" ? 3 : 2, background: "#f7f7f7" }}>{key}</th>
                   ))}
                 </tr>
               </thead>
@@ -165,7 +163,7 @@ function App() {
                 {getFilteredDrugs().map((drug, index) => (
                   <tr key={index}>
                     {["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean).map((key, i) => (
-                      <td key={i} style={{ padding: "14px", border: "1px solid #eee", whiteSpace: key === "비고" ? "nowrap" : "normal", overflow: key === "비고" ? "visible" : "hidden", wordBreak: key === "비고" ? "normal" : "break-word", overflowWrap: "anywhere", minWidth: getColumnWidth(key) }}>{drug[key]}</td>
+                      <td key={i} style={{ padding: "14px", border: "1px solid #eee", whiteSpace: key === "비고" && drug[key] && drug[key].length > 10 ? "normal" : key === "비고" ? "nowrap" : "normal", overflow: key === "비고" ? "visible" : "hidden", wordBreak: key === "비고" ? "break-word" : "break-word", overflowWrap: "anywhere", minWidth: getColumnWidth(key), background: key === "제품명" ? "#fff" : undefined, position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, zIndex: key === "제품명" ? 1 : undefined }}>{drug[key]}</td>
                     ))}
                   </tr>
                 ))}
