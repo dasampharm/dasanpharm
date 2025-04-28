@@ -23,7 +23,9 @@ function App() {
       return;
     }
     const lower = value.toLowerCase();
-    const filtered = data.filter((item) => item["제품명"]?.toLowerCase().startsWith(lower));
+    const filtered = data
+    .filter((item) => item["제품명"]?.toLowerCase().startsWith(lower))
+    .sort((a, b) => a["제품명"].localeCompare(b["제품명"]));  // ★ 여기 추가
     setSuggestions(filtered);
   };
 
