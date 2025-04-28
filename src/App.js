@@ -87,7 +87,7 @@ function App() {
       minWidth: "100px"
     } : {};
 
-    if (["제품명", "성분", "용량", "제약사"].includes(key)) {
+    if (["제품명", "용량", "제약사"].includes(key)) {
       return {
         color: "#000",
         whiteSpace: value && value.length > 8 ? "normal" : "nowrap",
@@ -97,6 +97,16 @@ function App() {
         ...commonStickyStyle
       };
     }
+    if (key === "성분") {
+      return {
+        color: "#000",
+        minWidth: "160px", // 성분명 칸 최소 넓이 확보
+        whiteSpace: "normal",
+        wordBreak: "break-word",
+        overflowWrap: "anywhere",
+        ...commonStickyStyle
+      };
+}
     if (["품절", "환산액", "약가", "요율"].includes(key)) {
       return {
         color: "#000",
