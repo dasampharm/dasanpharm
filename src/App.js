@@ -204,7 +204,21 @@ function App() {
               <thead>
                 <tr>
                   {tableHeaders.map((key, i) => (
-                    <th key={i} style={{ padding: "14px", border: "1px solid #ccc", backgroundColor: "#f0f0f0", textAlign: "left", position: key === "제품명" ? "sticky" : undefined, left: key === "제품명" ? 0 : undefined, zIndex: key === "제품명" ? 3 : undefined }}>{key}</th>
+               		<th
+  				key={i}
+  				style={{
+    				padding: "14px",
+   				border: "1px solid #ccc",
+    				backgroundColor: "#f0f0f0",
+    				textAlign: "left",
+    				position: key === "제품명" ? "sticky" : "sticky", // 모두 sticky
+    				top: 0,                                          // ★ 이거 추가
+    				left: key === "제품명" ? 0 : undefined,
+    				zIndex: key === "제품명" ? 3 : 2                  // 제품명이면 더 높은 z-index
+ 			 }}
+			>
+			  {key}
+			</th>
                   ))}
                 </tr>
               </thead>
