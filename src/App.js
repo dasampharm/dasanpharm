@@ -62,8 +62,11 @@ function App() {
         .sort((a, b) => (parseFloat(b["요율"]) || 0) - (parseFloat(a["요율"]) || 0))
       ];
     } else if (selectedCategory) {
-      filtered = data.filter((item) => item["분류"] === selectedCategory);
-    }
+      filtered = data
+    .filter((item) => item["분류"] === selectedCategory)
+    .sort((a, b) => a["제품명"].localeCompare(b["제품명"])); // ★ 정렬 추가
+}
+
     if (availableOnly) {
       filtered = filtered.filter((item) => item["품절"] === "정상유통");
     }
