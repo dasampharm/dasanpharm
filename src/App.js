@@ -55,8 +55,8 @@ function App() {
         return sameIngredient && (!sameDoseOnly || sameDose);
       });
       filtered = [
-          selectedDrug,
-          ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
+        selectedDrug,
+        ...filtered.filter((item) => item["제품명"] !== selectedDrug["제품명"])
         .sort((a, b) => (parseFloat(b["요율"]) || 0) - (parseFloat(a["요율"]) || 0))
       ];
     } else if (selectedCategory) {
@@ -128,7 +128,7 @@ function App() {
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1000px", margin: "0 auto" }}>
       <div style={{ position: "sticky", top: 0, zIndex: 10, backgroundColor: "#fff", paddingBottom: "10px" }}>
         <h1 style={{ fontSize: "26px" }}>약물 검색</h1>
-        <div style={{ display: "flex", gap: "8px", marginBottom: "20px" }}>
+        <div style={{ display: "flex", gap: "8px", marginBottom: "10px" }}>
           <div style={{ position: "relative", flexGrow: 1 }}>
             <FaSearch style={{ position: "absolute", top: "50%", left: "12px", transform: "translateY(-50%)", color: "#888" }} />
             <input
@@ -158,8 +158,8 @@ function App() {
           </div>
           <h3 style={{ fontSize: "16px", marginBottom: "12px" }}>안내사항</h3>
           <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7", marginTop: "20px" }}>
-            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
-            <p>제품명 검색 시 동일 성분의 약물이 보여집니다.</p>
+            <p>다산팝에서 거래하는 약물 리스트입니다.</p>
+            <p>제품명 검색 시 동일 성분의 약물이 보여지며,</p>
             <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
           </div>
         </>
@@ -167,23 +167,23 @@ function App() {
 
       {(selectedDrug || selectedCategory) && (
         <div style={{ marginTop: "10px", width: "100%", overflowX: "auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-            <h2>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "6px" }}>
+            <h2 style={{ fontSize: "20px" }}>{selectedDrug ? "동일성분조회" : `📂 ${selectedCategory} 카테고리`}</h2>
             <span onClick={handleReset} style={{ fontSize: "13px", color: "#2F75B5", cursor: "pointer" }}>메인으로 돌아가기</span>
           </div>
 
           {selectedDrug && (
-            <div style={{ fontSize: "14px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "16px", marginBottom: "8px" }}>
               성분 : {selectedDrug["성분"]} {selectedDrug["용량"]}
             </div>
           )}
 
           {selectedDrug && (
-            <div style={{ display: "flex", gap: "10px", marginBottom: "10px" }}>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+            <div style={{ display: "flex", gap: "14px", marginBottom: "10px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "16px" }}>
                 <input type="checkbox" checked={sameDoseOnly} onChange={() => setSameDoseOnly(!sameDoseOnly)} /> 동일 용량
               </label>
-              <label style={{ display: "flex", alignItems: "center", fontSize: "14px" }}>
+              <label style={{ display: "flex", alignItems: "center", fontSize: "16px" }}>
                 <input type="checkbox" checked={availableOnly} onChange={() => setAvailableOnly(!availableOnly)} /> 거래 가능
               </label>
             </div>
