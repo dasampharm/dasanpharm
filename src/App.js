@@ -173,7 +173,7 @@ function App() {
           </div>
           <h3 style={{ fontSize: "16px", marginBottom: "10px" }}>안내사항</h3>
           <div style={{ backgroundColor: "#f9f9f9", border: "1px solid #ccc", borderRadius: "12px", padding: "20px", fontSize: "13px", lineHeight: "1.7", marginTop: "15px" }}>
-            <p>다산팝에서 거래하는 약물 리스트입니다.</p>
+            <p>다산팜에서 거래하는 약물 리스트입니다.</p>
             <p>제품명 검색 시 동일 성분의 약물이 보여지며,</p>
             <p>약가는 매일 영업일 10시 경에 업데이트됩니다.</p>
           </div>
