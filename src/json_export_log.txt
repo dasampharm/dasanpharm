@@ -1,0 +1,68 @@
+[실패] 에러 발생:
+Traceback (most recent call last):
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: '품절'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dsp67\OneDrive - dasan pharm\LINK\자동화\excelto_json.py", line 65, in <module>
+    json_data = [format_output(row) for _, row in df.iterrows()]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\OneDrive - dasan pharm\LINK\자동화\excelto_json.py", line 65, in <listcomp>
+    json_data = [format_output(row) for _, row in df.iterrows()]
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\OneDrive - dasan pharm\LINK\자동화\excelto_json.py", line 59, in format_output
+    '품절': '정상유통' if str(row['품절']).strip() == "0" else row['품절'],
+                              ~~~^^^^^^^^
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: '품절'
+
+[실패] 에러 발생:
+Traceback (most recent call last):
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\indexes\base.py", line 3805, in get_loc
+    return self._engine.get_loc(casted_key)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "index.pyx", line 167, in pandas._libs.index.IndexEngine.get_loc
+  File "index.pyx", line 196, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7081, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas\\_libs\\hashtable_class_helper.pxi", line 7089, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: '품절'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\dsp67\OneDrive - dasan pharm\LINK\자동화\excelto_json.py", line 65, in <module>
+    json_data = [format_output(row) for _, row in df.iterrows()]
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\OneDrive - dasan pharm\LINK\자동화\excelto_json.py", line 65, in <listcomp>
+    json_data = [format_output(row) for _, row in df.iterrows()]
+                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\OneDrive - dasan pharm\LINK\자동화\excelto_json.py", line 59, in format_output
+    '품절': '정상유통' if str(row['품절']).strip() == "0" else row['품절'],
+                              ~~~^^^^^^^^
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\series.py", line 1121, in __getitem__
+    return self._get_value(key)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\series.py", line 1237, in _get_value
+    loc = self.index.get_loc(label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\dsp67\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\site-packages\pandas\core\indexes\base.py", line 3812, in get_loc
+    raise KeyError(key) from err
+KeyError: '품절'
+
+[성공] 변환 완료: C:/Users/dsp67/dasanpharm/src/약물데이터.json
+[성공] 변환 완료: C:/Users/dsp67/dasanpharm/src/약물데이터.json
