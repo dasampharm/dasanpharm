@@ -68,7 +68,7 @@ function App() {
 }
 
     if (availableOnly) {
-      filtered = filtered.filter((item) => item["품절"] === "정상유통");
+      filtered = filtered.filter((item) => item["품절체크"] === "정상유통");
     }
     return filtered;
   };
@@ -112,7 +112,7 @@ function App() {
         ...commonStickyStyle
       };
 }
-    if (["품절", "환산액", "약가", "요율"].includes(key)) {
+    if (["품절체크", "환산액", "약가", "요율"].includes(key)) {
       return {
         color: "#000",
         whiteSpace: "nowrap",
@@ -137,7 +137,7 @@ function App() {
     };
   };
 
-  const tableHeaders = ["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].filter(Boolean);
+  const tableHeaders = ["제품명", selectedDrug ? null : "성분", "용량", "제약사", "약가", "요율", "환산액", "품절체크", "비고"].filter(Boolean);
 
   return (
     <div style={{ padding: "20px", fontFamily: "sans-serif", maxWidth: "1000px", margin: "0 auto" }}>
