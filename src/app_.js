@@ -64,7 +64,7 @@ function App() {
       filtered = data.filter((item) => item["분류"] === selectedCategory);
     }
     if (availableOnly) {
-      filtered = filtered.filter((item) => item["품절"] === "정상유통");
+      filtered = filtered.filter((item) => item["품절체크"] === "정상유통");
     }
     return filtered;
   };
@@ -187,7 +187,7 @@ function App() {
                     position: "sticky", top: 0, zIndex: 2,
                     whiteSpace: "normal", wordBreak: "break-word"
                   }}>성분</th>
-                  {["용량", "제약사", "약가", "요율", "환산액", "품절", "비고"].map((label, i) => (
+                  {["용량", "제약사", "약가", "요율", "환산액", "품절체크", "비고"].map((label, i) => (
                     <th key={i} style={{
                       width: "8%", padding: "14px", border: "1px solid #ccc",
                       backgroundColor: "#f7f7f7", textAlign: "left",
@@ -215,7 +215,7 @@ function App() {
                     <td style={{ width: "8%", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["약가"]}</td>
                     <td style={{ width: "8%", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["요율"]}</td>
                     <td style={{ width: "8%", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["환산액"]}</td>
-                    <td style={{ width: "8%", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절"]}</td>
+                    <td style={{ width: "8%", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["품절체크"]}</td>
                     <td style={{ width: "8%", padding: "14px", border: "1px solid #eee", whiteSpace: "nowrap" }}>{drug["비고"]}</td>
                   </tr>
                 ))}
